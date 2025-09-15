@@ -3,359 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>utomatisme Mathématiques</title>
+    <title>Automatismes Mathématiques - Format 5ème</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .header {
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            text-align: center;
-        }
-
-        h1 {
-            color: #764ba2;
-            font-size: 2.5em;
-            margin-bottom: 10px;
-        }
-
-        .subtitle {
-            color: #666;
-            font-size: 1.2em;
-        }
-
-        .controls {
-            background: white;
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 30px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .control-group {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        label {
-            font-weight: bold;
-            color: #333;
-        }
-
-        select, input[type="number"] {
-            padding: 8px 12px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: border-color 0.3s;
-        }
-
-        select:focus, input[type="number"]:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        button {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 25px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
-        }
-
-        button:active {
-            transform: translateY(0);
-        }
-
-        .quiz-container {
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            min-height: 400px;
-        }
-
-        .question-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #eee;
-        }
-
-        .question-number {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-weight: bold;
-        }
-
-        .timer {
-            font-size: 1.2em;
-            color: #666;
-            font-weight: bold;
-        }
-
-        .question-content {
-            margin: 30px 0;
-            padding: 20px;
-            background: #f8f9fa;
-            border-radius: 15px;
-            border-left: 4px solid #667eea;
-        }
-
-        .question-text {
-            font-size: 1.3em;
-            color: #333;
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-
-        .math-display {
-            font-size: 1.4em;
-            margin: 15px 0;
-            text-align: center;
-        }
-
-        .answer-input {
-            padding: 12px 20px;
-            font-size: 18px;
-            border: 2px solid #ddd;
-            border-radius: 10px;
-            width: 300px;
-            max-width: 100%;
-            transition: border-color 0.3s;
-        }
-
-        .answer-input:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        .question-actions {
-            display: flex;
-            gap: 15px;
-            margin-top: 30px;
-        }
-
-        .btn-validate {
-            background: #28a745;
-        }
-
-        .btn-validate:hover {
-            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
-        }
-
-        .btn-skip {
-            background: #ffc107;
-        }
-
-        .btn-skip:hover {
-            box-shadow: 0 6px 20px rgba(255, 193, 7, 0.4);
-        }
-
-        .btn-next {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-
-        .feedback {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 10px;
-            font-weight: bold;
-            animation: slideIn 0.3s ease-out;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .feedback.correct {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-
-        .feedback.incorrect {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-
-        .explanation-box {
-            margin-top: 15px;
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 3px solid;
-        }
-
-        .explanation-box.correct {
-            background: #e8f5e9;
-            border-color: #4caf50;
-        }
-
-        .explanation-box.incorrect {
-            background: #ffebee;
-            border-color: #f44336;
-        }
-
-        .math-steps {
-            margin-top: 10px;
-            line-height: 2.5;
-        }
-
-        .math-step {
-            display: block;
-            margin: 8px 0;
-            font-size: 1.1em;
-        }
-
-        .figure-container {
-            margin: 20px 0;
-            text-align: center;
-        }
-
-        .figure-container svg {
-            max-width: 100%;
-            height: auto;
-        }
-
-        .results {
-            text-align: center;
-            padding: 40px;
-        }
-
-        .score {
-            font-size: 3em;
-            color: #667eea;
-            margin: 20px 0;
-            font-weight: bold;
-        }
-
-        .results-details {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 15px;
-            margin: 20px 0;
-        }
-
-        .results-details h3 {
-            color: #333;
-            margin-bottom: 15px;
-        }
-
-        .question-review {
-            text-align: left;
-            margin: 15px 0;
-            padding: 15px;
-            background: white;
-            border-radius: 8px;
-        }
-
-        .question-review.correct {
-            border-left: 4px solid #28a745;
-        }
-
-        .question-review.incorrect {
-            border-left: 4px solid #dc3545;
-        }
-
-        .review-explanation {
-            margin-top: 10px;
-            padding: 10px;
-            background: #f5f5f5;
-            border-radius: 5px;
-            border-left: 3px solid #9c27b0;
-        }
-
-        .time-info {
-            background: #e3f2fd;
-            padding: 10px 15px;
-            border-radius: 8px;
-            margin: 10px 0;
-            color: #1976d2;
-            font-weight: bold;
-        }
-
-        .hidden {
-            display: none;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; }
+        .header { background: white; border-radius: 20px; padding: 30px; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); text-align: center; }
+        h1 { color: #764ba2; font-size: 2.5em; margin-bottom: 10px; }
+        .subtitle { color: #666; font-size: 1.2em; }
+        .controls { background: white; border-radius: 15px; padding: 20px; margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; align-items: center; }
+        .control-group { display: flex; align-items: center; gap: 10px; }
+        label { font-weight: bold; color: #333; }
+        select, input[type="number"] { padding: 8px 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px; transition: border-color 0.3s; }
+        select:focus, input[type="number"]:focus { outline: none; border-color: #667eea; }
+        button { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 12px 30px; border-radius: 25px; font-size: 16px; font-weight: bold; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4); }
+        button:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5); }
+        button:active { transform: translateY(0); }
+        .quiz-container { background: white; border-radius: 20px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); min-height: 400px; }
+        .question-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 2px solid #eee; }
+        .question-number { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 8px 16px; border-radius: 20px; font-weight: bold; }
+        .timer { font-size: 1.2em; color: #666; font-weight: bold; }
+        .mode-info { background: #fff3cd; color: #856404; padding: 10px; border-radius: 8px; margin-bottom: 15px; text-align: center; }
+        .question-content { margin: 30px 0; padding: 20px; background: #f8f9fa; border-radius: 15px; border-left: 4px solid #667eea; }
+        .question-text { font-size: 1.3em; color: #333; line-height: 1.6; margin-bottom: 20px; }
+        .math-display { font-size: 1.4em; margin: 15px 0; text-align: center; }
+        .answer-input { padding: 12px 20px; font-size: 18px; border: 2px solid #ddd; border-radius: 10px; width: 300px; max-width: 100%; transition: border-color 0.3s; }
+        .answer-input:focus { outline: none; border-color: #667eea; box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1); }
+        .question-actions { display: flex; gap: 15px; margin-top: 30px; }
+        .btn-validate { background: #28a745; }
+        .btn-validate:hover { box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4); }
+        .btn-skip { background: #ffc107; }
+        .btn-skip:hover { box-shadow: 0 6px 20px rgba(255, 193, 7, 0.4); }
+        .btn-next { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .feedback { margin-top: 20px; padding: 15px; border-radius: 10px; font-weight: bold; animation: slideIn 0.3s ease-out; }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        .feedback.correct { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .feedback.incorrect { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .explanation-box { margin-top: 15px; padding: 15px; border-radius: 8px; border-left: 3px solid; }
+        .explanation-box.correct { background: #e8f5e9; border-color: #4caf50; }
+        .explanation-box.incorrect { background: #ffebee; border-color: #f44336; }
+        .math-steps { margin-top: 10px; line-height: 2.5; }
+        .math-step { display: block; margin: 8px 0; font-size: 1.1em; }
+        .figure-container { margin: 20px 0; text-align: center; }
+        .figure-container svg { max-width: 100%; height: auto; }
+        .grid-container { margin: 20px auto; display: inline-block; }
+        .grid { display: inline-grid; gap: 1px; background: #333; padding: 1px; border: 2px solid #333; }
+        .grid-cell { width: 30px; height: 30px; background: white; }
+        .grid-cell.filled { background: #888; }
+        .bar-chart { margin: 20px 0; text-align: center; }
+        .results { text-align: center; padding: 40px; }
+        .score { font-size: 3em; color: #667eea; margin: 20px 0; font-weight: bold; }
+        .results-details { background: #f8f9fa; padding: 20px; border-radius: 15px; margin: 20px 0; }
+        .results-details h3 { color: #333; margin-bottom: 15px; }
+        .question-review { text-align: left; margin: 15px 0; padding: 15px; background: white; border-radius: 8px; }
+        .question-review.correct { border-left: 4px solid #28a745; }
+        .question-review.incorrect { border-left: 4px solid #dc3545; }
+        .review-explanation { margin-top: 10px; padding: 10px; background: #f5f5f5; border-radius: 5px; border-left: 3px solid #9c27b0; }
+        .time-info { background: #e3f2fd; padding: 10px 15px; border-radius: 8px; margin: 10px 0; color: #1976d2; font-weight: bold; }
+        .hidden { display: none; }
         @media (max-width: 600px) {
-            .controls {
-                flex-direction: column;
-            }
-            
-            .control-group {
-                width: 100%;
-                justify-content: space-between;
-            }
-            
-            h1 {
-                font-size: 1.8em;
-            }
+            .controls { flex-direction: column; }
+            .control-group { width: 100%; justify-content: space-between; }
+            h1 { font-size: 1.8em; }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>📐 Automatismes Mathématiques</h1>
-            <div class="subtitle">Entraînement aux calculs sans calculatrice mais avec un brouillon</div>
+            <h1>📐 Automatismes Mathématiques - 5ème</h1>
+            <div class="subtitle">Entraînement format épreuve (sans calculatrice, avec brouillon autorisé)</div>
         </div>
 
         <div class="controls">
             <div class="control-group">
                 <label for="questionCount">Nombre de questions:</label>
-                <input type="number" id="questionCount" min="5" max="30" value="10">
+                <input type="number" id="questionCount" min="5" max="30" value="30">
+            </div>
+            <div class="control-group">
+                <label for="mode">Mode:</label>
+                <select id="mode">
+                    <option value="training">Entraînement ( avec explications )</option>
+                    <option value="exam">Examen (9 minutes, sans explications)</option>
+                </select>
             </div>
             <button onclick="startQuiz()">🚀 Commencer le test</button>
         </div>
@@ -364,17 +97,80 @@
             <div class="welcome" id="welcome">
                 <h2 style="text-align: center; color: #667eea; margin-bottom: 20px;">Bienvenue !</h2>
                 <p style="text-align: center; font-size: 1.1em; color: #666; line-height: 1.8;">
-                    Ce générateur crée automatiquement des questions d'automatismes mathématiques variées.<br>
-                    Configurez vos préférences ci-dessus et cliquez sur "Commencer le test" pour débuter.<br><br>
-                    Plus de 30 types de questions différents : calculs, fractions, pourcentages, géométrie, probabilités, statistiques et plus encore !<br><br>
-                    Un chronomètre suit votre temps par question pour vous aider à améliorer votre rapidité.
+                    Ce générateur reproduit fidèlement le format des épreuves d'automatismes de 5ème.<br>
+                    Les questions sont basées sur le modèle officiel avec :<br><br>
+                    • Compléter des opérations à trou<br>
+                    • Calculs décimaux et fractions<br>
+                    • Pourcentages et proportionnalité<br>
+                    • Géométrie (périmètres, aires, volumes)<br>
+                    • Conversions d'unités et durées<br>
+                    • Suites logiques et statistiques<br><br>
+                    Mode Examen : 30 questions en 9 minutes, comme l'épreuve réelle !
                 </p>
             </div>
         </div>
     </div>
 
     <script>
-        // Variables globales
+        // ===== Helpers généraux =====
+        function toFrenchNumber(num, decimals = null) {
+            if (typeof num === 'number') {
+                if (decimals !== null) num = num.toFixed(decimals);
+                else num = num.toString();
+            }
+            return num.replace('.', ',');
+        }
+
+        function parseDecimal(str) {
+            return parseFloat(
+                str.replace(/\s|\u00A0|\u202F/g, '').replace(',', '.')
+            );
+        }
+
+        function renderMath(latex) {
+            const span = document.createElement('span');
+            katex.render(latex, span, { throwOnError: false, displayMode: false });
+            return span.outerHTML;
+        }
+
+        function renderMathDisplay(latex) {
+            const div = document.createElement('div');
+            katex.render(latex, div, { throwOnError: false, displayMode: true });
+            return div.outerHTML;
+        }
+
+        function renderExplanation(steps) {
+            let html = '<div class="math-steps">';
+            steps.forEach(step => { html += '<div class="math-step">' + renderMath(step) + '</div>'; });
+            html += '</div>';
+            return html;
+        }
+
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            if (mins > 0) return `${mins}min ${secs}s`;
+            return `${secs}s`;
+        }
+
+        // Comparaison numérique tolérante
+        function isNumericEquivalent(a, b, tol = 1e-9) {
+            const na = Number(a), nb = Number(b);
+            if (Number.isFinite(na) && Number.isFinite(nb)) {
+                return Math.abs(na - nb) <= tol;
+            }
+            return false;
+        }
+
+        function normalizeNumberLike(s) {
+            return s.toLowerCase()
+                .replace(',', '.')
+                .replace(/\s/g, '')
+                .replace(/€/g, '')
+                .replace(/%/g, '');
+        }
+
+        // ===== Variables globales =====
         let currentQuestionIndex = 0;
         let questions = [];
         let userAnswers = [];
@@ -383,78 +179,13 @@
         let hasAnswered = false;
         let questionStartTime = 0;
         let questionTimes = [];
+        let examTimer = null;
+        let examTimeRemaining = 540; // 9 minutes
 
-        // Fonction pour convertir en virgule décimale
-        function toFrenchNumber(num, decimals = null) {
-            if (typeof num === 'number') {
-                if (decimals !== null) {
-                    num = num.toFixed(decimals);
-                } else {
-                    num = num.toString();
-                }
-            }
-            return num.replace('.', ',');
-        }
-
-        // Fonction pour parser un nombre avec virgule
-        function parseDecimal(str) {
-            return parseFloat(
-                str.replace(/\s|\u00A0|\u202F/g, '')
-                   .replace(',', '.')
-            );
-        }
-
-        // Fonction pour créer des formules mathématiques avec KaTeX
-        function renderMath(latex) {
-            const span = document.createElement('span');
-            katex.render(latex, span, {
-                throwOnError: false,
-                displayMode: false
-            });
-            return span.outerHTML;
-        }
-
-        // Fonction pour créer des formules mathématiques en display
-        function renderMathDisplay(latex) {
-            const div = document.createElement('div');
-            katex.render(latex, div, {
-                throwOnError: false,
-                displayMode: true
-            });
-            return div.outerHTML;
-        }
-
-        // Fonction pour créer des explications multi-lignes
-        function renderExplanation(steps) {
-            let html = '<div class="math-steps">';
-            steps.forEach(step => {
-                html += '<div class="math-step">' + renderMath(step) + '</div>';
-            });
-            html += '</div>';
-            return html;
-        }
-
-        // Fonction pour formater le temps
-        function formatTime(seconds) {
-            const mins = Math.floor(seconds / 60);
-            const secs = seconds % 60;
-            if (mins > 0) {
-                return `${mins}min ${secs}s`;
-            }
-            return `${secs}s`;
-        }
-
-        // Classe pour générer les questions
+        // ===== Générateur de questions =====
         class QuestionGenerator {
-            constructor() {
-                this.lastTypes = [];
-                this.maxRepeat = 2;
-            }
-
-            random(min, max) {
-                return Math.floor(Math.random() * (max - min + 1)) + min;
-            }
-
+            constructor() { this.lastTypes = []; this.maxRepeat = 3; }
+            random(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
             randomFloat(min, max, decimals = 2) {
                 const num = Math.random() * (max - min) + min;
                 return Math.round(num * Math.pow(10, decimals)) / Math.pow(10, decimals);
@@ -462,974 +193,751 @@
 
             getAvailableTypes() {
                 return [
-                    'multiplication', 'division', 'percentage', 'fraction', 
-                    'decimal', 'time', 'unit_conversion', 'geometry_perimeter',
-                    'geometry_area', 'proportion', 'angle', 'equation',
-                    'number_sequence', 'opposite', 'rounding', 'order_of_operations',
-                    'square', 'square_root', 'cube', 'scientific_notation',
-                    'fraction_addition', 'fraction_multiplication', 'decimal_multiplication',
-                    'percentage_increase', 'percentage_decrease', 'ratio',
-                    'speed', 'probability', 'mean', 'pythagorean', 'volume'
+                    'complete_multiplication', 'decimal_writing', 'decimal_addition', 'decimal_subtraction',
+                    'percentage_simple', 'division_quotient', 'time_arrival', 'fraction_of_quantity',
+                    'division_cost', 'euclidean_division_remainder', 'missing_value_proportion',
+                    'figure_enlargement', 'surface_fraction', 'order_of_operations', 'sequence_double',
+                    'bar_chart', 'percentage_from_fraction', 'time_conversion', 'product_calculation',
+                    'rectangle_perimeter', 'triangle_construction', 'volume_pave', 'large_number_multiplication',
+                    'equation_simple', 'fraction_thirds', 'complete_equation', 'unit_conversion_volume',
+                    'polygon_area', 'product_sum_difference', 'power_of_six'
                 ];
             }
 
             generateQuestion() {
                 const allTypes = this.getAvailableTypes();
-                
                 let availableTypes = allTypes.filter(type => {
                     const count = this.lastTypes.filter(t => t === type).length;
                     return count < this.maxRepeat;
                 });
-                
-                if (availableTypes.length === 0) {
-                    this.lastTypes = [];
-                    availableTypes = allTypes;
-                }
-                
+                if (availableTypes.length === 0) { this.lastTypes = []; availableTypes = allTypes; }
+
                 const type = availableTypes[this.random(0, availableTypes.length - 1)];
-                
                 this.lastTypes.push(type);
-                if (this.lastTypes.length > 5) {
-                    this.lastTypes.shift();
-                }
-                
+                if (this.lastTypes.length > 10) this.lastTypes.shift();
+
                 switch(type) {
-                    case 'multiplication': return this.generateMultiplication();
-                    case 'division': return this.generateDivision();
-                    case 'percentage': return this.generatePercentage();
-                    case 'fraction': return this.generateFraction();
-                    case 'decimal': return this.generateDecimal();
-                    case 'time': return this.generateTime();
-                    case 'unit_conversion': return this.generateUnitConversion();
-                    case 'geometry_perimeter': return this.generatePerimeter();
-                    case 'geometry_area': return this.generateArea();
-                    case 'proportion': return this.generateProportion();
-                    case 'angle': return this.generateAngle();
-                    case 'equation': return this.generateEquation();
-                    case 'number_sequence': return this.generateSequence();
-                    case 'opposite': return this.generateOpposite();
-                    case 'rounding': return this.generateRounding();
+                    case 'complete_multiplication': return this.generateCompleteMultiplication();
+                    case 'decimal_writing': return this.generateDecimalWriting();
+                    case 'decimal_addition': return this.generateDecimalAddition();
+                    case 'decimal_subtraction': return this.generateDecimalSubtraction();
+                    case 'percentage_simple': return this.generatePercentageSimple();
+                    case 'division_quotient': return this.generateDivisionQuotient();
+                    case 'time_arrival': return this.generateTimeArrival();
+                    case 'fraction_of_quantity': return this.generateFractionOfQuantity();
+                    case 'division_cost': return this.generateDivisionCost();
+                    case 'euclidean_division_remainder': return this.generateEuclideanDivisionRemainder();
+                    case 'missing_value_proportion': return this.generateMissingValueProportion();
+                    case 'figure_enlargement': return this.generateFigureEnlargement();
+                    case 'surface_fraction': return this.generateSurfaceFraction();
                     case 'order_of_operations': return this.generateOrderOfOperations();
-                    case 'square': return this.generateSquare();
-                    case 'square_root': return this.generateSquareRoot();
-                    case 'cube': return this.generateCube();
-                    case 'scientific_notation': return this.generateScientificNotation();
-                    case 'fraction_addition': return this.generateFractionAddition();
-                    case 'fraction_multiplication': return this.generateFractionMultiplication();
-                    case 'decimal_multiplication': return this.generateDecimalMultiplication();
-                    case 'percentage_increase': return this.generatePercentageIncrease();
-                    case 'percentage_decrease': return this.generatePercentageDecrease();
-                    case 'ratio': return this.generateRatio();
-                    case 'speed': return this.generateSpeed();
-                    case 'probability': return this.generateProbability();
-                    case 'mean': return this.generateMean();
-                    case 'pythagorean': return this.generatePythagorean();
-                    case 'volume': return this.generateVolume();
-                    default: return this.generateMultiplication();
+                    case 'sequence_double': return this.generateSequenceDouble();
+                    case 'bar_chart': return this.generateBarChart();
+                    case 'percentage_from_fraction': return this.generatePercentageFromFraction();
+                    case 'time_conversion': return this.generateTimeConversion();
+                    case 'product_calculation': return this.generateProductCalculation();
+                    case 'rectangle_perimeter': return this.generateRectanglePerimeter();
+                    case 'triangle_construction': return this.generateTriangleConstruction();
+                    case 'volume_pave': return this.generateVolumePave();
+                    case 'large_number_multiplication': return this.generateLargeNumberMultiplication();
+                    case 'equation_simple': return this.generateEquationSimple();
+                    case 'fraction_thirds': return this.generateFractionThirds();
+                    case 'complete_equation': return this.generateCompleteEquation();
+                    case 'unit_conversion_volume': return this.generateUnitConversionVolume();
+                    case 'polygon_area': return this.generatePolygonArea();
+                    case 'product_sum_difference': return this.generateProductSumDifference();
+                    case 'power_of_six': return this.generatePowerOfSix();
+                    default: return this.generateCompleteMultiplication();
                 }
             }
 
-            generateMultiplication() {
-                const a = this.random(11, 19);
-                const b = this.random(6, 14);
+            generateCompleteMultiplication() {
+                const products = [12, 14, 15, 16, 18, 20, 21, 24, 27, 28, 30, 32, 35, 36, 40, 42, 45, 48, 49, 54, 56, 63, 64, 72, 81];
+                const product = products[this.random(0, products.length - 1)];
+                const divisors = [];
+                for (let i = 2; i <= 9; i++) if (product % i === 0 && product / i <= 9) divisors.push(i);
+                const a = divisors[this.random(0, divisors.length - 1)];
+                const b = product / a;
                 return {
-                    question: `Calculer : ${a} × ${b}`,
-                    answer: (a * b).toString(),
+                    question: `Complète : ${a} × ... = ${product}`,
+                    answer: b.toString(),
                     type: 'numerical',
-                    mathDisplay: `${a} \\times ${b} = ?`,
-                    explanationSteps: [`${a} \\times ${b} = ${a * b}`]
+                    mathDisplay: `${a} \\times \\ldots = ${product}`,
+                    explanationSteps: [`${a} \\times ? = ${product}`, `? = ${product} \\div ${a}`, `? = ${b}`]
                 };
             }
 
-            generateDivision() {
-                const b = this.random(6, 15);
-                const result = this.random(7, 25);
-                const a = b * result;
+            generateDecimalWriting() {
+                const units = this.random(1, 9);
+                const tenths = this.random(1, 9);
+                const hundredths = this.random(1, 9);
+                const thousandths = this.random(1, 9);
+                const value = units + tenths/10 + hundredths/100 + thousandths/1000;
                 return {
-                    question: `Calculer : ${a} ÷ ${b}`,
-                    answer: result.toString(),
+                    question: `Écriture décimale de : ${units} + ${tenths}/10 + ${hundredths}/100 + ${thousandths}/1000`,
+                    answer: toFrenchNumber(value, 3),
                     type: 'numerical',
-                    mathDisplay: `${a} \\div ${b} = ?`,
+                    mathDisplay: `${units} + \\frac{${tenths}}{10} + \\frac{${hundredths}}{100} + \\frac{${thousandths}}{1000} = ?`,
                     explanationSteps: [
-                        `${a} \\div ${b} = ${result}`,
-                        `\\text{Vérification : } ${b} \\times ${result} = ${a}`
+                        `${units} + \\frac{${tenths}}{10} + \\frac{${hundredths}}{100} + \\frac{${thousandths}}{1000}`,
+                        `= ${toFrenchNumber(units,0)} + ${toFrenchNumber(tenths/10,1)} + ${toFrenchNumber(hundredths/100,2)} + ${toFrenchNumber(thousandths/1000,3)}`,
+                        `= ${toFrenchNumber(value,3)}`
                     ]
                 };
             }
 
-            generatePercentage() {
-                const percentages = [15, 30, 35, 40, 60, 65, 70, 85];
+            generateDecimalAddition() {
+                const a = this.randomFloat(1, 9, 1);
+                const b = this.randomFloat(0.01, 0.99, 2);
+                const result = Math.round((a + b) * 100) / 100;
+                return {
+                    question: `${toFrenchNumber(a, 1)} + ${toFrenchNumber(b, 2)}`,
+                    answer: toFrenchNumber(result, 2),
+                    type: 'numerical',
+                    mathDisplay: `${toFrenchNumber(a, 1)} + ${toFrenchNumber(b, 2)} = ?`,
+                    explanationSteps: [`${toFrenchNumber(a, 1)} + ${toFrenchNumber(b, 2)} = ${toFrenchNumber(result, 2)}`]
+                };
+            }
+
+            generateDecimalSubtraction() {
+                const a = this.random(11, 20);
+                const b = this.randomFloat(3, 8, 1);
+                const result = a - b;
+                return {
+                    question: `${a} - ${toFrenchNumber(b, 1)}`,
+                    answer: toFrenchNumber(result, 1),
+                    type: 'numerical',
+                    mathDisplay: `${a} - ${toFrenchNumber(b, 1)} = ?`,
+                    explanationSteps: [`${a} - ${toFrenchNumber(b, 1)} = ${toFrenchNumber(result, 1)}`]
+                };
+            }
+
+            generatePercentageSimple() {
+                const percentages = [10, 20, 25, 50, 75];
                 const percent = percentages[this.random(0, percentages.length - 1)];
-                const value = this.random(12, 48) * 5;
+                const values = [40, 60, 64, 80, 100, 120, 160];
+                const value = values[this.random(0, values.length - 1)];
                 const result = (value * percent) / 100;
                 return {
-                    question: `Calculer ${percent}% de ${value} euros`,
+                    question: `${percent}% de ${value}`,
                     answer: result.toString(),
                     type: 'numerical',
-                    unit: 'euros',
-                    mathDisplay: `${percent}\\% \\text{ de } ${value}\\text{ euros} = ?`,
+                    mathDisplay: `${percent}\\% \\text{ de } ${value} = ?`,
                     explanationSteps: [
                         `${percent}\\% \\text{ de } ${value} = \\frac{${percent}}{100} \\times ${value}`,
                         `= ${toFrenchNumber(percent/100)} \\times ${value}`,
-                        `= ${result}\\text{ euros}`
-                    ]
-                };
-            }
-
-            generateFraction() {
-                const operations = ['tiers', 'sixième', 'cinquième', 'huitième','quart','moitié'];
-                const op = operations[this.random(0, operations.length - 1)];
-                let divisor, fraction;
-                switch(op) {
-                    case 'tiers': divisor = 3; fraction = '\\frac{1}{3}'; break;
-                    case 'sixième': divisor = 6; fraction = '\\frac{1}{6}'; break;
-                    case 'cinquième': divisor = 5; fraction = '\\frac{1}{5}'; break;
-                    case 'huitième': divisor = 8; fraction = '\\frac{1}{8}'; break;
-                    case 'quart': divisor = 4; fraction = '\\frac{1}{4}'; break;
-                    case 'moitié': divisor = 2; fraction = '\\frac{1}{2}'; break;
-                }
-                
-                const value = this.random(5, 20) * divisor;
-                const result = value / divisor;
-                
-                return {
-                    question: `Le ${op} de ${value} est :`,
-                    answer: result.toString(),
-                    type: 'numerical',
-                    mathDisplay: `${fraction} \\times ${value} = ?`,
-                    explanationSteps: [
-                        `\\text{Le ${op} de } ${value} = ${fraction} \\times ${value}`,
-                        `= \\frac{${value}}{${divisor}}`,
                         `= ${result}`
                     ]
                 };
             }
 
-            generateDecimal() {
-                const a = this.randomFloat(1.2, 9.8, 1);
-                const b = this.randomFloat(0.6, 8.7, 1);
-                const operation = this.random(0, 1) === 0 ? '+' : '-';
-                const result = operation === '+' ? (a + b) : (a - b);
-                const roundedResult = Math.round(result * 10) / 10;
-                
+            generateDivisionQuotient() {
+                const divisor = this.random(6, 9);
+                const quotient = this.random(8, 15);
+                const dividend = divisor * quotient;
                 return {
-                    question: `Calculer : ${toFrenchNumber(a)} ${operation} ${toFrenchNumber(b)}`,
-                    answer: toFrenchNumber(roundedResult),
+                    question: `${dividend} ÷ ${divisor}`,
+                    answer: quotient.toString(),
                     type: 'numerical',
-                    mathDisplay: `${toFrenchNumber(a)} ${operation} ${toFrenchNumber(b)} = ?`,
+                    mathDisplay: `${dividend} \\div ${divisor} = ?`,
+                    explanationSteps: [`${dividend} \\div ${divisor} = ${quotient}`]
+                };
+            }
+
+            generateTimeArrival() {
+                const startHour = this.random(14, 17);
+                const startMin = this.random(0, 59);
+                const durationHour = this.random(1, 3);
+                const durationMin = this.random(10, 50);
+                let endMin = startMin + durationMin;
+                let endHour = startHour + durationHour;
+                if (endMin >= 60) { endHour += Math.floor(endMin / 60); endMin = endMin % 60; }
+                return {
+                    question: `Toto part à ${startHour}h${startMin.toString().padStart(2, '0')} et son trajet dure ${durationHour}h${durationMin.toString().padStart(2, '0')}min. À quelle heure arrive-t-il ?`,
+                    answer: `${endHour}h${endMin.toString().padStart(2, '0')}`,
+                    type: 'time',
                     explanationSteps: [
-                        `${toFrenchNumber(a)} ${operation} ${toFrenchNumber(b)} = ${toFrenchNumber(roundedResult)}`
+                        `${startHour}\\text{h}${startMin.toString().padStart(2, '0')} + ${durationHour}\\text{h}${durationMin}\\text{min}`,
+                        `= ${endHour}\\text{h}${endMin.toString().padStart(2, '0')}`
                     ]
                 };
             }
 
-            generateSquare() {
-                const n = this.random(1, 12);
-                const result = n * n;
+            generateFractionOfQuantity() {
+                const fractions = [{text: 'moitié', value: 2},{text: 'tiers', value: 3},{text: 'quart', value: 4}];
+                const fraction = fractions[this.random(0, fractions.length - 1)];
+                const total = this.random(3, 12) * fraction.value;
+                const result = total / fraction.value;
                 return {
-                    question: `Calculer ${n}²`,
+                    question: `La ${fraction.text} de ${total}`,
                     answer: result.toString(),
                     type: 'numerical',
-                    mathDisplay: `${n}^2 = ?`,
+                    mathDisplay: `\\frac{1}{${fraction.value}} \\times ${total} = ?`,
                     explanationSteps: [
-                        `${n}^2 = ${n} \\times ${n}`,
+                        `\\text{La ${fraction.text} de } ${total} = \\frac{${total}}{${fraction.value}}`,
                         `= ${result}`
                     ]
                 };
             }
 
-            generateSquareRoot() {
-                const squares = [1, 4, 9, 16, 25, 36, 49, 64, 81, 100, 121, 144];
-                const n = squares[this.random(0, squares.length - 1)];
-                const result = Math.sqrt(n);
+            generateDivisionCost() {
+                const unitPrice = this.random(2, 5);
+                const quantity = this.random(3, 8);
+                const totalPrice = unitPrice * quantity;
                 return {
-                    question: `Calculer √${n}`,
-                    answer: result.toString(),
+                    question: `${quantity} bâtons de réglisse coûtent ${totalPrice} €. Combien coûtent ${quantity * 2} bâtons de réglisse ?`,
+                    answer: (totalPrice * 2).toString(),
                     type: 'numerical',
-                    mathDisplay: `\\sqrt{${n}} = ?`,
+                    unit: '€',
                     explanationSteps: [
-                        `\\sqrt{${n}} = ${result}`,
-                        `\\text{car } ${result}^2 = ${n}`
+                        `\\text{Prix unitaire} = ${totalPrice} \\div ${quantity} = ${unitPrice}\\text{ €}`,
+                        `\\text{Prix pour } ${quantity * 2} \\text{ bâtons} = ${unitPrice} \\times ${quantity * 2}`,
+                        `= ${totalPrice * 2}\\text{ €}`
                     ]
                 };
             }
 
-            generateCube() {
-                const n = this.random(1, 8);
-                const result = n * n * n;
+            generateEuclideanDivisionRemainder() {
+                const divisor = this.random(5, 9);
+                const quotient = this.random(4, 8);
+                const remainder = this.random(1, divisor - 1);
+                const dividend = divisor * quotient + remainder;
                 return {
-                    question: `Calculer ${n}³`,
-                    answer: result.toString(),
+                    question: `Le reste de la division euclidienne de ${dividend} par ${divisor} est :`,
+                    answer: remainder.toString(),
                     type: 'numerical',
-                    mathDisplay: `${n}^3 = ?`,
+                    mathDisplay: `${dividend} = ${divisor} \\times q + r`,
                     explanationSteps: [
-                        `${n}^3 = ${n} \\times ${n} \\times ${n}`,
-                        `= ${n * n} \\times ${n}`,
-                        `= ${result}`
+                        `${dividend} \\div ${divisor} = ${quotient} \\text{ reste } ${remainder}`,
+                        `${dividend} = ${divisor} \\times ${quotient} + ${remainder}`,
+                        `\\text{Le reste est } ${remainder}`
                     ]
                 };
             }
 
-            generateScientificNotation() {
-                const mantissa = this.randomFloat(1, 9.9, 1);
-                const exponent = this.random(-3, 3);
-                const result = mantissa * Math.pow(10, exponent);
-
-                return {
-                    question: `Écrire en notation décimale : ${toFrenchNumber(mantissa, 1)} × 10^${exponent}`,
-                    answer: toFrenchNumber(result),
-                    type: 'numerical',
-                    mathDisplay: `${toFrenchNumber(mantissa, 1)} \\times 10^{${exponent}} = ?`,
-                    explanationSteps: [
-                        `${toFrenchNumber(mantissa, 1)} \\times 10^{${exponent}}`,
-                        exponent > 0 
-                            ? `= ${toFrenchNumber(mantissa, 1)} \\times ${Math.pow(10, exponent)}`
-                            : `= ${toFrenchNumber(mantissa, 1)} \\div ${Math.pow(10, -exponent)}`,
-                        `= ${toFrenchNumber(result)}`
-                    ]
-                };
-            }
-
-            generateFractionAddition() {
-                const denominators = [2, 3, 4, 5, 6, 8];
-                const d = denominators[this.random(0, denominators.length - 1)];
-                const n1 = this.random(1, d - 1);
-                const n2 = this.random(1, d - 1);
-                const result = (n1 + n2) / d;
-                
-                let answerStr;
-                if ((n1 + n2) % d === 0) {
-                    answerStr = ((n1 + n2) / d).toString();
-                } else {
-                    let num = n1 + n2;
-                    let den = d;
-                    for (let i = 2; i <= Math.min(num, den); i++) {
-                        while (num % i === 0 && den % i === 0) {
-                            num /= i;
-                            den /= i;
-                        }
-                    }
-                    answerStr = `${num}/${den}`;
-                }
-                
-                return {
-                    question: `Calculer : ${n1}/${d} + ${n2}/${d}`,
-                    answer: answerStr,
-                    type: 'fraction',
-                    mathDisplay: `\\frac{${n1}}{${d}} + \\frac{${n2}}{${d}} = ?`,
-                    explanationSteps: [
-                        `\\frac{${n1}}{${d}} + \\frac{${n2}}{${d}} = \\frac{${n1} + ${n2}}{${d}}`,
-                        `= \\frac{${n1 + n2}}{${d}}`,
-                        answerStr.includes('/') ? `= ${answerStr}` : `= ${answerStr}`
-                    ]
-                };
-            }
-
-            generateFractionMultiplication() {
-                const n1 = this.random(2, 9);
-                const d1 = this.random(3, 9);
-                const n2 = this.random(2, 9);
-                const d2 = this.random(3, 9);
-                
-                let num = n1 * n2;
-                let den = d1 * d2;
-                
-                for (let i = 2; i <= Math.min(num, den); i++) {
-                    while (num % i === 0 && den % i === 0) {
-                        num /= i;
-                        den /= i;
-                    }
-                }
-                
-                const answerStr = den === 1 ? num.toString() : `${num}/${den}`;
-                
-                return {
-                    question: `Calculer : ${n1}/${d1} × ${n2}/${d2}`,
-                    answer: answerStr,
-                    type: 'fraction',
-                    mathDisplay: `\\frac{${n1}}{${d1}} \\times \\frac{${n2}}{${d2}} = ?`,
-                    explanationSteps: [
-                        `\\frac{${n1}}{${d1}} \\times \\frac{${n2}}{${d2}} = \\frac{${n1} \\times ${n2}}{${d1} \\times ${d2}}`,
-                        `= \\frac{${n1 * n2}}{${d1 * d2}}`,
-                        `= ${answerStr}`
-                    ]
-                };
-            }
-
-            generateDecimalMultiplication() {
-                const a = this.randomFloat(0.1, 0.9, 1);
-                const b = this.random(10, 90);
-                const result = Math.round(a * b * 10) / 10;
-                
-                return {
-                    question: `Calculer : ${toFrenchNumber(a)} × ${b}`,
-                    answer: toFrenchNumber(result),
-                    type: 'numerical',
-                    mathDisplay: `${toFrenchNumber(a)} \\times ${b} = ?`,
-                    explanationSteps: [
-                        `${toFrenchNumber(a)} \\times ${b}`,
-                        `= ${toFrenchNumber(result)}`
-                    ]
-                };
-            }
-
-            generatePercentageIncrease() {
-                const initial = this.random(10, 50) * 10;
-                const percent = this.random(1, 5) * 10;
-                const increase = initial * percent / 100;
-                const result = initial + increase;
-                
-                return {
-                    question: `Un article coûte ${initial} euros. Son prix augmente de ${percent}%. Quel est le nouveau prix ?`,
-                    answer: result.toString(),
-                    type: 'numerical',
-                    unit: 'euros',
-                    mathDisplay: ``,
-                    explanationSteps: [
-                        `\\text{Augmentation} = ${initial} \\times \\frac{${percent}}{100}`,
-                        `= ${initial} \\times ${toFrenchNumber(percent/100)}`,
-                        `= ${increase}`,
-                        `\\text{Nouveau prix} = ${initial} + ${increase}`,
-                        `= ${result}`
-                    ]
-                };
-            }
-
-            generatePercentageDecrease() {
-                const initial = this.random(15, 60) * 10;
-                const percent = this.random(1, 4) * 10;
-                const decrease = initial * percent / 100;
-                const result = initial - decrease;
-                
-                return {
-                    question: `Un article coûte ${initial} euros. Il y a une remise de ${percent}%. Quel est le prix après remise ?`,
-                    answer: result.toString(),
-                    type: 'numerical',
-                    unit: 'euros',
-                    mathDisplay: ``,
-                    explanationSteps: [
-                        `\\text{Remise} = ${initial} \\times \\frac{${percent}}{100}`,
-                        `= ${initial} \\times ${toFrenchNumber(percent/100)}`,
-                        `= ${decrease}`,
-                        `\\text{Prix après remise} = ${initial} - ${decrease}`,
-                        `= ${result}`
-                    ]
-                };
-            }
-
-            generateRatio() {
-                const total = this.random(6, 15) * 10;
-                const parts = [2, 3, 5];
-                const ratio1 = parts[this.random(0, parts.length - 1)];
-                const ratio2 = parts[this.random(0, parts.length - 1)];
-                const part1 = (total * ratio1) / (ratio1 + ratio2);
-                
-                return {
-                    question: `Partager ${total} euros dans le rapport ${ratio1}:${ratio2}. Quelle est la plus petite part ?`,
-                    answer: Math.min(part1, total - part1).toString(),
-                    type: 'numerical',
-                    unit: 'euros',
-                    mathDisplay: ``,
-                    explanationSteps: [
-                        `\\text{Total des parts} = ${ratio1} + ${ratio2} = ${ratio1 + ratio2}`,
-                        `\\text{Valeur d'une part} = \\frac{${total}}{${ratio1 + ratio2}} = ${total/(ratio1 + ratio2)}`,
-                        `\\text{Première partie} = ${ratio1} \\times ${total/(ratio1 + ratio2)} = ${part1}`,
-                        `\\text{Deuxième partie} = ${ratio2} \\times ${total/(ratio1 + ratio2)} = ${total - part1}`,
-                        `\\text{Plus petite part} = ${Math.min(part1, total - part1)}`
-                    ]
-                };
-            }
-
-            generateSpeed() {
-                const distance = this.random(12, 48) * 5;
-                const time = this.random(2, 6);
-                const speed = distance / time;
-                
-                return {
-                    question: `Une voiture parcourt ${distance} km en ${time} heures. Quelle est sa vitesse moyenne ?`,
-                    answer: speed.toString(),
-                    type: 'numerical',
-                    unit: 'km/h',
-                    mathDisplay: ``,
-                    explanationSteps: [
-                        `\\text{Vitesse} = \\frac{\\text{Distance}}{\\text{Temps}}`,
-                        `= \\frac{${distance}\\text{ km}}{${time}\\text{ h}}`,
-                        `= ${speed}\\text{ km/h}`
-                    ]
-                };
-            }
-
-            generateProbability() {
-                const total = this.random(10, 30);
-                const favorable = this.random(3, Math.min(12, total - 2));
-                
-                let num = favorable;
-                let den = total;
-                for (let i = 2; i <= Math.min(num, den); i++) {
-                    while (num % i === 0 && den % i === 0) {
-                        num /= i;
-                        den /= i;
-                    }
-                }
-                
-                return {
-                    question: `Dans un sac, il y a ${total} billes dont ${favorable} sont rouges. Quelle est la probabilité de tirer une bille rouge ?`,
-                    answer: `${num}/${den}`,
-                    type: 'fraction',
-                    mathDisplay: `P(\\text{rouge}) = \\frac{${favorable}}{${total}} = ?`,
-                    explanationSteps: [
-                        `P(\\text{rouge}) = \\frac{\\text{Nombre de billes rouges}}{\\text{Nombre total de billes}}`,
-                        `= \\frac{${favorable}}{${total}}`,
-                        num !== favorable ? `= \\frac{${num}}{${den}}` : ''
-                    ].filter(s => s !== '')
-                };
-            }
-
-            generateMean() {
-                const count = 5;
-                const values = [];
-                for (let i = 0; i < count; i++) {
-                    values.push(this.random(5, 20));
-                }
-                const sum = values.reduce((a, b) => a + b, 0);
-                const mean = sum / count;
-                
-                return {
-                    question: `Calculer la moyenne de : ${values.join(' ; ')}`,
-                    answer: toFrenchNumber(mean),
-                    type: 'numerical',
-                    mathDisplay: ``,
-                    explanationSteps: [
-                        `\\text{Somme} = ${values.join(' + ')} = ${sum}`,
-                        `\\text{Moyenne} = \\frac{${sum}}{${count}}`,
-                        `= ${toFrenchNumber(mean)}`
-                    ]
-                };
-            }
-
-            generatePythagorean() {
-                const pythagoreanTriples = [
-                    [3, 4, 5], [5, 12, 13], [8, 15, 17], [7, 24, 25]
-                ];
-                const triple = pythagoreanTriples[this.random(0, pythagoreanTriples.length - 1)];
-                const [a, b, c] = triple;
-                
+            generateMissingValueProportion() {
+                const baseValue = this.random(50, 58);
+                const targetValue = this.random(54, 62);
                 const figure = `
-                    <svg width="200" height="150" viewBox="0 0 200 150">
-                        <polygon points="30,120 30,30 150,120" fill="none" stroke="#667eea" stroke-width="2"/>
-                        <rect x="25" y="115" width="10" height="10" fill="none" stroke="#667eea" stroke-width="1"/>
-                        <text x="15" y="75" text-anchor="middle" font-size="14" fill="#333">${a}</text>
-                        <text x="90" y="135" text-anchor="middle" font-size="14" fill="#333">${b}</text>
-                        <text x="100" y="70" text-anchor="middle" font-size="14" fill="#333">?</text>
-                    </svg>
-                `;
-                
+                    <svg width="200" height="100" viewBox="0 0 200 100">
+                        <line x1="20" y1="50" x2="80" y2="50" stroke="#667eea" stroke-width="2"/>
+                        <line x1="120" y1="50" x2="180" y2="50" stroke="#667eea" stroke-width="2"/>
+                        <text x="50" y="40" text-anchor="middle" font-size="14" fill="#333">A</text>
+                        <text x="30" y="70" text-anchor="middle" font-size="14" fill="#333">${baseValue}</text>
+                        <text x="70" y="70" text-anchor="middle" font-size="14" fill="#333">?</text>
+                        <text x="150" y="40" text-anchor="middle" font-size="14" fill="#333">➀</text>
+                        <text x="150" y="70" text-anchor="middle" font-size="14" fill="#333">${targetValue}</text>
+                    </svg>`;
+                const answer = targetValue - baseValue;
                 return {
-                    question: `Dans un triangle rectangle, les côtés de l'angle droit mesurent ${a} cm et ${b} cm. Quelle est la longueur de l'hypoténuse ?`,
-                    answer: c.toString(),
+                    question: `Quelle est l'abscisse de A ?`,
+                    answer: answer.toString(),
+                    type: 'numerical',
+                    figure: figure,
+                    explanationSteps: [
+                        `\\text{Distance de A à ➀} = ${targetValue} - ${baseValue}`,
+                        `= ${answer}`,
+                        `\\text{Donc l'abscisse de A est } ${baseValue} + ${answer} = ${targetValue}`
+                    ]
+                };
+            }
+
+            generateFigureEnlargement() {
+                const originalLength = this.randomFloat(1.5, 3.5, 1);
+                const scale = this.random(2, 4);
+                const result = originalLength * scale;
+                const figure = `
+                    <svg width="250" height="120" viewBox="0 0 250 120">
+                        <rect x="20" y="40" width="60" height="40" fill="none" stroke="#667eea" stroke-width="2"/>
+                        <text x="50" y="30" text-anchor="middle" font-size="12" fill="#333">➀</text>
+                        <text x="50" y="100" text-anchor="middle" font-size="12" fill="#333">${toFrenchNumber(originalLength)} cm</text>
+                        <rect x="120" y="20" width="120" height="80" fill="none" stroke="#764ba2" stroke-width="2"/>
+                        <text x="180" y="10" text-anchor="middle" font-size="12" fill="#333">➁</text>
+                        <text x="180" y="115" text-anchor="middle" font-size="12" fill="#333">? cm</text>
+                        <text x="100" y="60" text-anchor="middle" font-size="14" fill="#333">×${scale}</text>
+                    </svg>`;
+                return {
+                    question: `La figure ➁ est un agrandissement de ➀. Quelle est la longueur manquante ?`,
+                    answer: toFrenchNumber(result),
                     type: 'numerical',
                     unit: 'cm',
                     figure: figure,
-                    mathDisplay: ``,
                     explanationSteps: [
-                        `\\text{Théorème de Pythagore : } c^2 = a^2 + b^2`,
-                        `c^2 = ${a}^2 + ${b}^2`,
-                        `c^2 = ${a * a} + ${b * b}`,
-                        `c^2 = ${a * a + b * b}`,
-                        `c = \\sqrt{${a * a + b * b}} = ${c}\\text{ cm}`
+                        `\\text{Agrandissement} \\times ${scale}`,
+                        `${toFrenchNumber(originalLength)} \\times ${scale} = ${toFrenchNumber(result)}\\text{ cm}`
                     ]
                 };
             }
 
-            generateVolume() {
-                const shape = this.random(0, 1);
-                
-                if (shape === 0) {
-                    const side = this.random(3, 9);
-                    const volume = side * side * side;
-                    
-                    return {
-                        question: `Quel est le volume d'un cube d'arête ${side} cm ?`,
-                        answer: volume.toString(),
-                        type: 'numerical',
-                        unit: 'cm³',
-                        mathDisplay: ``,
-                        explanationSteps: [
-                            `V_{\\text{cube}} = \\text{arête}^3`,
-                            `= ${side}^3`,
-                            `= ${side} \\times ${side} \\times ${side}`,
-                            `= ${volume}\\text{ cm}^3`
-                        ]
-                    };
-                } else {
-                    const l = this.random(3, 8);
-                    const w = this.random(2, 6);
-                    const h = this.random(2, 5);
-                    const volume = l * w * h;
-                    
-                    return {
-                        question: `Quel est le volume d'un pavé droit de dimensions ${l} cm × ${w} cm × ${h} cm ?`,
-                        answer: volume.toString(),
-                        type: 'numerical',
-                        unit: 'cm³',
-                        mathDisplay: ``,
-                        explanationSteps: [
-                            `V_{\\text{pavé}} = L \\times l \\times h`,
-                            `= ${l} \\times ${w} \\times ${h}`,
-                            `= ${l * w} \\times ${h}`,
-                            `= ${volume}\\text{ cm}^3`
-                        ]
-                    };
+            generateSurfaceFraction() {
+                const rows = 4, cols = 4;
+                const filled = this.random(3, 8);
+                const total = rows * cols;
+                // Simplification
+                let num = filled, den = total;
+                for (let i = 2; i <= Math.min(num, den); i++) {
+                    while (num % i === 0 && den % i === 0) { num /= i; den /= i; }
                 }
-            }
-
-            generateTime() {
-                const hours = this.random(14, 22);
-                const minutes = this.random(0, 59);
-                const addHours = this.random(0, 2);
-                const addMinutes = this.random(15, 55);
-                
-                let newMinutes = minutes + addMinutes;
-                let newHours = hours + addHours;
-                
-                if (newMinutes >= 60) {
-                    newHours += Math.floor(newMinutes / 60);
-                    newMinutes = newMinutes % 60;
-                }
-                
-                if (newHours >= 24) {
-                    newHours = newHours % 24;
-                }
-                
-                const startTime = `${hours}h${minutes.toString().padStart(2, '0')}`;
-                const duration = addHours > 0 ? `${addHours}h${addMinutes}min` : `${addMinutes} min`;
-                
-                let explanationSteps = [];
-                if (minutes + addMinutes >= 60) {
-                    explanationSteps = [
-                        `${hours}\\text{h}${minutes.toString().padStart(2, '0')} + ${duration}`,
-                        `= ${hours + addHours}\\text{h}${minutes + addMinutes}\\text{min}`,
-                        `= ${newHours}\\text{h}${newMinutes.toString().padStart(2, '0')}`
-                    ];
-                } else {
-                    explanationSteps = [
-                        `${hours}\\text{h}${minutes.toString().padStart(2, '0')} + ${duration}`,
-                        `= ${newHours}\\text{h}${newMinutes.toString().padStart(2, '0')}`
-                    ];
-                }
-                
+                // Grille
+                let gridHTML = '<div class="grid-container"><div class="grid" style="grid-template-columns: repeat(4, 1fr);">';
+                for (let i = 0; i < total; i++) gridHTML += `<div class="grid-cell ${i < filled ? 'filled' : ''}"></div>`;
+                gridHTML += '</div></div>';
                 return {
-                    question: `Il est ${startTime}. Quelle heure sera-t-il dans ${duration} ?`,
-                    answer: `${newHours}h${newMinutes.toString().padStart(2, '0')}`,
-                    type: 'time',
-                    explanationSteps: explanationSteps
-                };
-            }
-
-            generateUnitConversion() {
-                const conversions = [
-                    { from: 'm', to: 'cm', factor: 100, value: this.randomFloat(1.5, 12.5, 1) },
-                    { from: 'dm', to: 'm', factor: 0.1, value: this.random(15, 85) },
-                    { from: 'km', to: 'm', factor: 1000, value: this.randomFloat(0.5, 8.5, 1) },
-                    { from: 'cm²', to: 'dm²', factor: 0.01, value: this.random(250, 950) },
-                    { from: 'm²', to: 'dm²', factor: 100, value: this.random(5, 35) },
-                    { from: 'L', to: 'mL', factor: 1000, value: this.randomFloat(0.5, 5.5, 1) },
-                    { from: 'kg', to: 'g', factor: 1000, value: this.randomFloat(0.5, 9.5, 1) }
-                ];
-                
-                const conv = conversions[this.random(0, conversions.length - 1)];
-                let result = conv.value * conv.factor;
-                
-                if (result % 1 !== 0) {
-                    result = Math.round(result * 100) / 100;
-                }
-                
-                return {
-                    question: `Convertir : ${toFrenchNumber(conv.value)} ${conv.from} = ? ${conv.to}`,
-                    answer: toFrenchNumber(result),
-                    type: 'numerical',
-                    mathDisplay: `${toFrenchNumber(conv.value)}\\text{ ${conv.from}} = ?\\text{ ${conv.to}}`,
+                    question: `Quelle fraction de la surface totale représente la surface grisée ?`,
+                    answer: `${num}/${den}`,
+                    type: 'fraction',
+                    figure: gridHTML,
                     explanationSteps: [
-                        `${toFrenchNumber(conv.value)}\\text{ ${conv.from}} = ${toFrenchNumber(conv.value)} \\times ${toFrenchNumber(conv.factor)}\\text{ ${conv.to}}`,
-                        `= ${toFrenchNumber(result)}\\text{ ${conv.to}}`
-                    ]
+                        `\\text{Cases grisées} = ${filled}`,
+                        `\\text{Cases totales} = ${total}`,
+                        `\\text{Fraction} = \\frac{${filled}}{${total}}`,
+                        num !== filled ? `= \\frac{${num}}{${den}}` : ''
+                    ].filter(Boolean)
                 };
-            }
-
-            generatePerimeter() {
-                const shape = this.random(0, 2);
-                
-                if (shape === 0) {
-                    const length = this.random(7, 18);
-                    const width = this.random(4, 12);
-                    const perimeter = 2 * (length + width);
-                    
-                    const figure = `
-                        <svg width="200" height="120" viewBox="0 0 200 120">
-                            <rect x="20" y="20" width="160" height="80" fill="none" stroke="#667eea" stroke-width="2"/>
-                            <text x="100" y="15" text-anchor="middle" font-size="14" fill="#333">${length} cm</text>
-                            <text x="10" y="65" text-anchor="middle" font-size="14" fill="#333" transform="rotate(-90, 10, 65)">${width} cm</text>
-                        </svg>
-                    `;
-                    
-                    return {
-                        question: `Quel est le périmètre d'un rectangle de longueur ${length} cm et de largeur ${width} cm ?`,
-                        answer: perimeter.toString(),
-                        type: 'numerical',
-                        unit: 'cm',
-                        figure: figure,
-                        mathDisplay: `\\text{Périmètre} = ?`,
-                        explanationSteps: [
-                            `\\text{Périmètre} = 2 \\times (\\text{longueur} + \\text{largeur})`,
-                            `= 2 \\times (${length} + ${width})`,
-                            `= 2 \\times ${length + width}`,
-                            `= ${perimeter}\\text{ cm}`
-                        ]
-                    };
-                } else if (shape === 1) {
-                    const side = this.random(8, 19);
-                    const perimeter = 4 * side;
-                    
-                    const figure = `
-                        <svg width="150" height="150" viewBox="0 0 150 150">
-                            <rect x="25" y="25" width="100" height="100" fill="none" stroke="#667eea" stroke-width="2"/>
-                            <text x="75" y="15" text-anchor="middle" font-size="14" fill="#333">${side} cm</text>
-                        </svg>
-                    `;
-                    
-                    return {
-                        question: `Quel est le périmètre d'un carré de côté ${side} cm ?`,
-                        answer: perimeter.toString(),
-                        type: 'numerical',
-                        unit: 'cm',
-                        figure: figure,
-                        mathDisplay: `\\text{Périmètre} = ?`,
-                        explanationSteps: [
-                            `\\text{Périmètre} = 4 \\times \\text{côté}`,
-                            `= 4 \\times ${side}`,
-                            `= ${perimeter}\\text{ cm}`
-                        ]
-                    };
-                } else {
-                    const side = this.random(7, 23);
-                    const perimeter = 3 * side;
-                    
-                    const figure = `
-                        <svg width="150" height="150" viewBox="0 0 150 150">
-                            <polygon points="75,25 25,115 125,115" fill="none" stroke="#667eea" stroke-width="2"/>
-                            <text x="75" y="140" text-anchor="middle" font-size="14" fill="#333">${side} cm</text>
-                        </svg>
-                    `;
-                    
-                    return {
-                        question: `Quel est le périmètre d'un triangle équilatéral de côté ${side} cm ?`,
-                        answer: perimeter.toString(),
-                        type: 'numerical',
-                        unit: 'cm',
-                        figure: figure,
-                        mathDisplay: `\\text{Périmètre} = ?`,
-                        explanationSteps: [
-                            `\\text{Périmètre} = 3 \\times \\text{côté}`,
-                            `= 3 \\times ${side}`,
-                            `= ${perimeter}\\text{ cm}`
-                        ]
-                    };
-                }
-            }
-
-            generateArea() {
-                const shape = this.random(0, 1);
-                
-                if (shape === 0) {
-                    const length = this.random(5, 15);
-                    const width = this.random(3, 12);
-                    const area = length * width;
-                    
-                    const figure = `
-                        <svg width="200" height="120" viewBox="0 0 200 120">
-                            <rect x="20" y="20" width="160" height="80" fill="rgba(102, 126, 234, 0.2)" stroke="#667eea" stroke-width="2"/>
-                            <text x="100" y="15" text-anchor="middle" font-size="14" fill="#333">${length} cm</text>
-                            <text x="10" y="65" text-anchor="middle" font-size="14" fill="#333" transform="rotate(-90, 10, 65)">${width} cm</text>
-                        </svg>
-                    `;
-                    
-                    return {
-                        question: `Quelle est l'aire d'un rectangle de ${length} cm sur ${width} cm ?`,
-                        answer: area.toString(),
-                        type: 'numerical',
-                        unit: 'cm²',
-                        figure: figure,
-                        mathDisplay: `\\text{Aire} = ?`,
-                        explanationSteps: [
-                            `\\text{Aire} = \\text{longueur} \\times \\text{largeur}`,
-                            `= ${length} \\times ${width}`,
-                            `= ${area}\\text{ cm}^2`
-                        ]
-                    };
-                } else {
-                    const side = this.random(7, 13);
-                    const area = side * side;
-                    
-                    const figure = `
-                        <svg width="150" height="150" viewBox="0 0 150 150">
-                            <rect x="25" y="25" width="100" height="100" fill="rgba(102, 126, 234, 0.2)" stroke="#667eea" stroke-width="2"/>
-                            <text x="75" y="15" text-anchor="middle" font-size="14" fill="#333">${side} cm</text>
-                        </svg>
-                    `;
-                    
-                    return {
-                        question: `Quelle est l'aire d'un carré de côté ${side} cm ?`,
-                        answer: area.toString(),
-                        type: 'numerical',
-                        unit: 'cm²',
-                        figure: figure,
-                        mathDisplay: `\\text{Aire} = ?`,
-                        explanationSteps: [
-                            `\\text{Aire} = \\text{côté} \\times \\text{côté}`,
-                            `= ${side} \\times ${side}`,
-                            `= ${area}\\text{ cm}^2`
-                        ]
-                    };
-                }
-            }
-
-            generateProportion() {
-                const a = this.random(3, 15);
-                const b = this.random(4, 20);
-                const c = this.random(5, 18);
-                const d = (b * c) / a;
-                
-                // S'assurer que d est un entier, que a≠c et que b≠d (éviter les proportions triviales)
-                if (d === Math.floor(d) && a !== c && b !== d && d > 0 && d <= 100) {
-                    const table = `
-                        <table style="margin: 20px auto; border-collapse: collapse;">
-                            <tr>
-                                <td style="border: 1px solid #667eea; padding: 10px 20px; text-align: center;">${a}</td>
-                                <td style="border: 1px solid #667eea; padding: 10px 20px; text-align: center;">${b}</td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #667eea; padding: 10px 20px; text-align: center;">${c}</td>
-                                <td style="border: 1px solid #667eea; padding: 10px 20px; text-align: center; background: #f0f0f0;">?</td>
-                            </tr>
-                        </table>
-                    `;
-                    
-                    return {
-                        question: `Compléter le tableau de proportionnalité :`,
-                        answer: d.toString(),
-                        type: 'numerical',
-                        figure: table,
-                        mathDisplay: ``,
-                        explanationSteps: [
-                            `\\text{Produit en croix :}`,
-                            `${a} \\times ? = ${b} \\times ${c}`,
-                            `${a} \\times ? = ${b * c}`,
-                            `? = \\frac{${b * c}}{${a}}`,
-                            `? = ${d}`
-                        ]
-                    };
-                } else {
-                    return this.generateProportion();
-                }
-            }
-
-            generateAngle() {
-                const angle1 = this.random(25, 75);
-                const angle2 = this.random(30, 80);
-                const angle3 = 180 - angle1 - angle2;
-                
-                if (angle3 > 20 && angle3 < 100) {
-                    const figure = `
-                        <svg width="200" height="150" viewBox="0 0 200 150">
-                            <polygon points="100,30 30,120 170,120" fill="none" stroke="#667eea" stroke-width="2"/>
-                            <text x="100" y="25" text-anchor="middle" font-size="14" fill="#333">?°</text>
-                            <text x="45" y="115" text-anchor="middle" font-size="14" fill="#333">${angle1}°</text>
-                            <text x="155" y="115" text-anchor="middle" font-size="14" fill="#333">${angle2}°</text>
-                        </svg>
-                    `;
-                    
-                    return {
-                        question: `Dans un triangle, deux angles mesurent ${angle1}° et ${angle2}°. Quelle est la mesure du troisième angle ?`,
-                        answer: angle3.toString(),
-                        type: 'numerical',
-                        unit: '°',
-                        figure: figure,
-                        mathDisplay: ``,
-                        explanationSteps: [
-                            `\\text{Somme des angles d'un triangle} = 180°`,
-                            `${angle1}° + ${angle2}° + ?° = 180°`,
-                            `${angle1 + angle2}° + ?° = 180°`,
-                            `?° = 180° - ${angle1 + angle2}°`,
-                            `?° = ${angle3}°`
-                        ]
-                    };
-                } else {
-                    return this.generateAngle();
-                }
-            }
-
-            generateEquation() {
-                const a = this.random(2, 5);
-                const b = this.random(1, 10);
-                const c = this.random(b + 1, b + 20);
-                const x = (c - b) / a;
-                
-                if (x === Math.floor(x)) {
-                    return {
-                        question: `Résoudre : ${a}x + ${b} = ${c}`,
-                        answer: x.toString(),
-                        type: 'numerical',
-                        mathDisplay: `${a}x + ${b} = ${c}`,
-                        explanationSteps: [
-                            `${a}x + ${b} = ${c}`,
-                            `${a}x = ${c} - ${b}`,
-                            `${a}x = ${c - b}`,
-                            `x = \\frac{${c - b}}{${a}}`,
-                            `x = ${x}`
-                        ]
-                    };
-                } else {
-                    return this.generateEquation();
-                }
-            }
-
-            generateSequence() {
-                const start = this.random(1, 20);
-                const step = this.random(2, 5);
-                const seq = [];
-                for (let i = 0; i < 4; i++) {
-                    seq.push(start + i * step);
-                }
-                const answer = start + 4 * step;
-                
-                return {
-                    question: `Compléter la suite : ${seq.join(' ; ')} ; ?`,
-                    answer: answer.toString(),
-                    type: 'numerical',
-                    mathDisplay: `${seq.join(' ; ')} ; ?`,
-                    explanationSteps: [
-                        `\\text{La suite augmente de } ${step} \\text{ à chaque fois :}`,
-                        `${seq[0]} \\xrightarrow{+${step}} ${seq[1]}`,
-                        `${seq[1]} \\xrightarrow{+${step}} ${seq[2]}`,
-                        `${seq[2]} \\xrightarrow{+${step}} ${seq[3]}`,
-                        `${seq[3]} \\xrightarrow{+${step}} ${answer}`
-                    ]
-                };
-            }
-
-            generateOpposite() {
-                const num = this.randomFloat(-20, 20, 1);
-                if (num === 0) return this.generateOpposite();
-                
-                return {
-                    question: `L'opposé de ${toFrenchNumber(num)} est :`,
-                    answer: toFrenchNumber(-num),
-                    type: 'numerical',
-                    mathDisplay: ``,
-                    explanationSteps: [
-                        `\\text{L'opposé de } ${toFrenchNumber(num)} = ${toFrenchNumber(-num)}`,
-                        `\\text{(L'opposé change le signe)}`
-                    ]
-                };
-            }
-
-            generateRounding() {
-                const num = this.randomFloat(10, 100, 4);
-                const thirdDecimal = Math.floor((num * 1000) % 10);
-                const fourthDecimal = Math.floor((num * 10000) % 10);
-
-                if (thirdDecimal !== 0 || fourthDecimal !== 0) {
-                    const rounded = Math.round(num * 100) / 100;
-
-                    return {
-                        question: `Arrondir ${toFrenchNumber(num)} au centième près :`,
-                        answer: toFrenchNumber(rounded, 2),
-                        type: 'numerical',
-                        mathDisplay: `${toFrenchNumber(num)} \\approx ?`,
-                        explanationSteps: [
-                            `${toFrenchNumber(num)} \\text{ arrondi au centième}`,
-                            `\\text{3e décimale : } ${thirdDecimal}`,
-                            `${thirdDecimal >= 5 
-                                ? `${thirdDecimal} \\geq 5 \\text{ donc on arrondit au-dessus}` 
-                                : `${thirdDecimal} < 5 \\text{ donc on arrondit en-dessous}`}`,
-                            `\\text{Résultat : } ${toFrenchNumber(rounded, 2)}`
-                        ]
-                    };
-                } else {
-                    return this.generateRounding();
-                }
             }
 
             generateOrderOfOperations() {
-                const a = this.random(2, 9);
-                const b = this.random(2, 9);
-                const c = this.random(2, 9);
+                const a = this.random(3, 9);
+                const b = this.random(2, 5);
+                const c = this.random(2, 6);
                 const result = a + b * c;
-                
                 return {
-                    question: `Calculer : ${a} + ${b} × ${c}`,
+                    question: `${a} + ${b} × ${c}`,
                     answer: result.toString(),
                     type: 'numerical',
                     mathDisplay: `${a} + ${b} \\times ${c} = ?`,
                     explanationSteps: [
-                        `\\text{Priorité : multiplication avant addition}`,
+                        `\\text{Priorité : multiplication}`,
                         `${a} + ${b} \\times ${c}`,
                         `= ${a} + ${b * c}`,
                         `= ${result}`
                     ]
                 };
             }
+
+            generateSequenceDouble() {
+                const start = this.randomFloat(1.5, 3.5, 1);
+                const seq = [start, start * 2, start * 4, start * 8];
+                const nextValue = start * 16;
+                return {
+                    question: `Complète la suite logique : ${toFrenchNumber(seq[0])} ; ${toFrenchNumber(seq[1])} ; ${toFrenchNumber(seq[2])} ; ? ; ${toFrenchNumber(nextValue)}`,
+                    answer: toFrenchNumber(seq[3]),
+                    type: 'numerical',
+                    explanationSteps: [
+                        `\\text{Chaque terme est multiplié par 2}`,
+                        `${toFrenchNumber(seq[0])} \\times 2 = ${toFrenchNumber(seq[1])}`,
+                        `${toFrenchNumber(seq[1])} \\times 2 = ${toFrenchNumber(seq[2])}`,
+                        `${toFrenchNumber(seq[2])} \\times 2 = ${toFrenchNumber(seq[3])}`
+                    ]
+                };
+            }
+
+            generateBarChart() {
+                const categories = ['Chien', 'Chat', 'Autre'];
+                const values = [ this.random(150, 250), this.random(200, 350), this.random(100, 200) ];
+                const total = values.reduce((a, b) => a + b, 0);
+                const barChart = `
+                    <div class="bar-chart">
+                        <svg width="300" height="200" viewBox="0 0 300 200">
+                            ${categories.map((cat, i) => {
+                                const barHeight = (values[i] / 400) * 150;
+                                const x = 50 + i * 80;
+                                return `
+                                    <rect x="${x}" y="${170 - barHeight}" width="60" height="${barHeight}" fill="#667eea" opacity="0.8"/>
+                                    <text x="${x + 30}" y="190" text-anchor="middle" font-size="12" fill="#333">${cat}</text>
+                                    <text x="${x + 30}" y="${165 - barHeight}" text-anchor="middle" font-size="12" fill="#333">${values[i]}</text>
+                                `;
+                            }).join('')}
+                            <line x1="40" y1="170" x2="280" y2="170" stroke="#333" stroke-width="2"/>
+                            <line x1="40" y1="20" x2="40" y2="170" stroke="#333" stroke-width="2"/>
+                        </svg>
+                    </div>`;
+                return {
+                    question: `Le nombre total d'animaux comptabilisés est :`,
+                    answer: total.toString(),
+                    type: 'numerical',
+                    figure: barChart,
+                    explanationSteps: [
+                        `\\text{Total} = ${values[0]} + ${values[1]} + ${values[2]}`,
+                        `= ${total}`
+                    ]
+                };
+            }
+
+            generatePercentageFromFraction() {
+                const numerators = [11, 13, 17, 19, 21, 23];
+                const denominators = [20, 25, 50];
+                const num = numerators[this.random(0, numerators.length - 1)];
+                const den = denominators[this.random(0, denominators.length - 1)];
+                const percentage = (num / den) * 100;
+                return {
+                    question: `Sur ${den} chiots, ${num} sont de couleur marron. Quel est le pourcentage de chiots marrons ?`,
+                    answer: percentage.toString(),
+                    type: 'numerical',
+                    unit: '%',
+                    explanationSteps: [
+                        `\\text{Pourcentage} = \\frac{${num}}{${den}} \\times 100`,
+                        `= ${toFrenchNumber(num/den)} \\times 100`,
+                        `= ${percentage}\\%`
+                    ]
+                };
+            }
+
+            generateTimeConversion() {
+                const hours = this.randomFloat(1, 3, 1);
+                const wholeHours = Math.floor(hours);
+                const minutes = Math.round((hours - wholeHours) * 60); // 0..59
+                const answer = `${wholeHours}h${minutes.toString().padStart(2,'0')}min`;
+                return {
+                    question: `Complète : ${toFrenchNumber(hours)}h = ...h ...min`,
+                    answer: answer,
+                    type: 'time_format',
+                    explanationSteps: [
+                        `${toFrenchNumber(hours)}\\text{h} = ${wholeHours}\\text{h} + ${toFrenchNumber(hours - wholeHours)}\\text{h}`,
+                        `${toFrenchNumber(hours - wholeHours)}\\text{h} = 60\\times${toFrenchNumber(hours - wholeHours)}\\text{min} = ${minutes}\\text{min}`,
+                        `\\text{Donc } ${toFrenchNumber(hours)}\\text{h} = ${wholeHours}\\text{h}${minutes.toString().padStart(2,'0')}\\text{min}`
+                    ]
+                };
+            }
+
+            generateProductCalculation() {
+                const factors = [2, 3, 4, 5, 10, 20, 25, 50];
+                const a = factors[this.random(0, factors.length - 1)];
+                const b = factors[this.random(0, factors.length - 1)];
+                const c = this.random(2, 5);
+                const d = factors[this.random(0, factors.length - 1)];
+                const result = a * b * c * d;
+                return {
+                    question: `${a} × ${b} × ${c} × ${d}`,
+                    answer: result.toString(),
+                    type: 'numerical',
+                    mathDisplay: `${a} \\times ${b} \\times ${c} \\times ${d} = ?`,
+                    explanationSteps: [
+                        `${a} \\times ${b} = ${a * b}`,
+                        `${a * b} \\times ${c} = ${a * b * c}`,
+                        `${a * b * c} \\times ${d} = ${result}`
+                    ]
+                };
+            }
+
+            generateRectanglePerimeter() {
+                const length = this.random(35, 55);
+                const width = this.randomFloat(4.5, 8.5, 1);
+                const perimeter = 2 * (length/10 + width);
+                return {
+                    question: `Quel est le périmètre d'un rectangle ABCD tel que : AB = ${length} mm et BC = ${toFrenchNumber(width)} cm ?`,
+                    answer: toFrenchNumber(perimeter),
+                    type: 'numerical',
+                    unit: 'cm',
+                    explanationSteps: [
+                        `AB = ${length}\\text{ mm} = ${toFrenchNumber(length/10)}\\text{ cm}`,
+                        `BC = ${toFrenchNumber(width)}\\text{ cm}`,
+                        `\\text{Périmètre} = 2 \\times (AB + BC)`,
+                        `= 2 \\times (${toFrenchNumber(length/10)} + ${toFrenchNumber(width)})`,
+                        `= 2 \\times ${toFrenchNumber(length/10 + width)}`,
+                        `= ${toFrenchNumber(perimeter)}\\text{ cm}`
+                    ]
+                };
+            }
+
+            generateTriangleConstruction() {
+                const sides = [
+                    [3, 4, 5],
+                    [3.5, 5.5, 12],
+                    [4, 6, 11],
+                    [2.5, 3.5, 7]
+                ];
+                const [a, b, c] = sides[this.random(0, sides.length - 1)];
+                const canConstruct = (a + b > c) && (a + c > b) && (b + c > a);
+                return {
+                    question: `Peut-on construire un triangle dont les trois côtés ont pour longueur : ${toFrenchNumber(a)} cm ; ${toFrenchNumber(b)} cm et ${c} cm ?`,
+                    answer: canConstruct ? 'OUI' : 'NON',
+                    type: 'yesno',
+                    explanationSteps: [
+                        `\\text{Inégalité triangulaire :}`,
+                        `${toFrenchNumber(a)} + ${toFrenchNumber(b)} = ${toFrenchNumber(a + b)} ${a + b > c ? '>' : '≤'} ${c}`,
+                        `${toFrenchNumber(a)} + ${c} = ${toFrenchNumber(a + c)} ${a + c > b ? '>' : '≤'} ${toFrenchNumber(b)}`,
+                        `${toFrenchNumber(b)} + ${c} = ${toFrenchNumber(b + c)} ${b + c > a ? '>' : '≤'} ${toFrenchNumber(a)}`,
+                        canConstruct ? `\\text{Les trois inégalités sont vérifiées : OUI}` : `\\text{Au moins une inégalité n'est pas vérifiée : NON}`
+                    ]
+                };
+            }
+
+            generateVolumePave() {
+                const length = this.random(3, 6);
+                const width = this.randomFloat(2, 4, 1);
+                const height = this.random(2, 4);
+                const volume = length * width * height;
+                const figure = `
+                    <svg width="200" height="150" viewBox="0 0 200 150">
+                        <rect x="40" y="50" width="80" height="60" fill="none" stroke="#667eea" stroke-width="2"/>
+                        <rect x="80" y="30" width="80" height="60" fill="none" stroke="#667eea" stroke-width="2" stroke-dasharray="5,5"/>
+                        <line x1="40" y1="50" x2="80" y2="30" stroke="#667eea" stroke-width="2"/>
+                        <line x1="120" y1="50" x2="160" y2="30" stroke="#667eea" stroke-width="2"/>
+                        <line x1="120" y1="110" x2="160" y2="90" stroke="#667eea" stroke-width="2"/>
+                        <line x1="40" y1="110" x2="80" y2="90" stroke="#667eea" stroke-width="2" stroke-dasharray="5,5"/>
+                        <text x="80" y="130" text-anchor="middle" font-size="12" fill="#333">${length} cm</text>
+                        <text x="25" y="85" text-anchor="middle" font-size="12" fill="#333">${toFrenchNumber(width)} cm</text>
+                        <text x="145" y="45" text-anchor="middle" font-size="12" fill="#333">${height} cm</text>
+                    </svg>`;
+                return {
+                    question: `Volume de ce pavé droit :`,
+                    answer: toFrenchNumber(volume),
+                    type: 'numerical',
+                    unit: 'cm³',
+                    figure: figure,
+                    mathDisplay: `V = ?\\text{ cm}^3`,
+                    explanationSteps: [
+                        `V = L \\times l \\times h`,
+                        `= ${length} \\times ${toFrenchNumber(width)} \\times ${height}`,
+                        `= ${toFrenchNumber(volume)}\\text{ cm}^3`
+                    ]
+                };
+            }
+
+            generateLargeNumberMultiplication() {
+                const multiples = [11, 12, 13, 14, 15, 16, 17, 18, 19, 21, 101, 111, 201];
+                const a = multiples[this.random(0, multiples.length - 1)];
+                const b = this.random(2, 9) * 10;
+                const result = a * b;
+                return {
+                    question: `${a} × ${b}`,
+                    answer: result.toString(),
+                    type: 'numerical',
+                    mathDisplay: `${a} \\times ${b} = ?`,
+                    explanationSteps: [
+                        `${a} \\times ${b} = ${a} \\times ${b/10} \\times 10`,
+                        `= ${a * (b/10)} \\times 10`,
+                        `= ${result}`
+                    ]
+                };
+            }
+
+            generateEquationSimple() {
+                const a = this.random(2, 9);
+                return {
+                    question: `Calcule n × (n + 2) pour n = ${a}`,
+                    answer: (a * (a + 2)).toString(),
+                    type: 'numerical',
+                    mathDisplay: `n \\times (n + 2) \\text{ pour } n = ${a}`,
+                    explanationSteps: [
+                        `n \\times (n + 2) \\text{ avec } n = ${a}`,
+                        `= ${a} \\times (${a} + 2)`,
+                        `= ${a} \\times ${a + 2}`,
+                        `= ${a * (a + 2)}`
+                    ]
+                };
+            }
+
+            generateFractionThirds() {
+                const numerator = this.random(1, 2);
+                const whole = this.random(20, 45);
+                const result = (numerator * whole) / 3;
+                const fractionText = numerator === 1 ? 'tiers' : 'deux tiers';
+                if (result === Math.floor(result)) {
+                    return {
+                        question: `Arthur mange ${numerator === 1 ? 'le' : 'les'} ${fractionText} d'un fromage de ${whole} g. Quelle masse de fromage a-t-il mangé ?`,
+                        answer: result.toString(),
+                        type: 'numerical',
+                        unit: 'g',
+                        explanationSteps: [
+                            `\\frac{${numerator}}{3} \\times ${whole}`,
+                            `= \\frac{${numerator} \\times ${whole}}{3}`,
+                            `= \\frac{${numerator * whole}}{3}`,
+                            `= ${result}\\text{ g}`
+                        ]
+                    };
+                } else {
+                    return this.generateFractionThirds();
+                }
+            }
+
+            generateCompleteEquation() {
+                const result = this.random(2, 5);
+                const multiplier = this.random(2, 4);
+                const product = result * multiplier;
+                return {
+                    question: `Complète : ${multiplier} × ... = ${product}`,
+                    answer: result.toString(),
+                    type: 'numerical',
+                    mathDisplay: `${multiplier} \\times \\ldots = ${product}`,
+                    explanationSteps: [
+                        `${multiplier} \\times ? = ${product}`,
+                        `? = ${product} \\div ${multiplier}`,
+                        `? = ${result}`
+                    ]
+                };
+            }
+
+            generateUnitConversionVolume() {
+                const values = [12.5, 22.5, 32.5, 42.5, 52.5];
+                const value = values[this.random(0, values.length - 1)];
+                const result = value * 1000;
+                return {
+                    question: `${toFrenchNumber(value)} m³ = ... dm³`,
+                    answer: result.toString(),
+                    type: 'numerical',
+                    mathDisplay: `${toFrenchNumber(value)}\\text{ m}^3 = ?\\text{ dm}^3`,
+                    explanationSteps: [
+                        `1\\text{ m}^3 = 1000\\text{ dm}^3`,
+                        `${toFrenchNumber(value)}\\text{ m}^3 = ${toFrenchNumber(value)} \\times 1000\\text{ dm}^3`,
+                        `= ${result}\\text{ dm}^3`
+                    ]
+                };
+            }
+
+            generatePolygonArea() {
+                const base = this.random(4, 7);
+                const height = this.random(2, 4);
+                const area = (base * height) / 2 + (base * height);
+                const figure = `
+                    <svg width="200" height="150" viewBox="0 0 200 150">
+                        <polygon points="30,100 30,50 100,50 100,30 170,100 30,100" 
+                                fill="rgba(136, 136, 136, 0.3)" stroke="#667eea" stroke-width="2"/>
+                        <rect x="95" y="45" width="10" height="10" fill="none" stroke="#667eea" stroke-width="1"/>
+                        <text x="100" y="120" text-anchor="middle" font-size="14" fill="#333">${base} cm</text>
+                        <text x="15" y="75" text-anchor="middle" font-size="14" fill="#333">${height} cm</text>
+                    </svg>`;
+                return {
+                    question: `Aire du polygone grisé :`,
+                    answer: area.toString(),
+                    type: 'numerical',
+                    unit: 'cm²',
+                    figure: figure,
+                    mathDisplay: `A = ?\\text{ cm}^2`,
+                    explanationSteps: [
+                        `\\text{Rectangle : } ${base} \\times ${height} = ${base * height}\\text{ cm}^2`,
+                        `\\text{Triangle : } \\frac{${base} \\times ${height}}{2} = ${(base * height) / 2}\\text{ cm}^2`,
+                        `\\text{Total : } ${base * height} + ${(base * height) / 2} = ${area}\\text{ cm}^2`
+                    ]
+                };
+            }
+
+            generateProductSumDifference() {
+                const a = this.random(6, 12);
+                const b = this.random(7, 13);
+                const sum = a + b;
+                const diff = Math.abs(a - b);
+                const product = sum * diff;
+                return {
+                    question: `Le produit de la somme de ${a} et ${b} par la différence de ${Math.max(a,b)} et ${Math.min(a,b)} est égal à :`,
+                    answer: product.toString(),
+                    type: 'numerical',
+                    explanationSteps: [
+                        `\\text{Somme : } ${a} + ${b} = ${sum}`,
+                        `\\text{Différence : } ${Math.max(a,b)} - ${Math.min(a,b)} = ${diff}`,
+                        `\\text{Produit : } ${sum} \\times ${diff} = ${product}`
+                    ]
+                };
+            }
+
+            generatePowerOfSix() {
+                const result = 6 - 6 / 6 * 6 + 6 * 6; // = 36
+                return {
+                    question: '6 - 6 ÷ 6 × 6 + 6 × 6',
+                    answer: result.toString(),
+                    type: 'numerical',
+                    mathDisplay: `6 - 6 \\div 6 \\times 6 + 6 \\times 6 = ?`,
+                    explanationSteps: [
+                        `\\text{Priorité : divisions et multiplications de gauche à droite}`,
+                        `6 - (6 \\div 6) \\times 6 + 6 \\times 6`,
+                        `= 6 - 1 \\times 6 + 6 \\times 6`,
+                        `= 6 - 6 + 36`,
+                        `= ${result}`
+                    ]
+                };
+            }
         }
 
-        // Fonctions principales
+        // ===== Flux principal =====
         function startQuiz() {
             const questionCount = parseInt(document.getElementById('questionCount').value);
-            
+            const mode = document.getElementById('mode').value;
+
             currentQuestionIndex = 0;
             questions = [];
             userAnswers = [];
             hasAnswered = false;
             questionTimes = [];
-            
+
+            if (mode === 'exam') { examTimeRemaining = 540; startExamTimer(); }
+
             const generator = new QuestionGenerator();
-            
-            for (let i = 0; i < questionCount; i++) {
-                questions.push(generator.generateQuestion());
-            }
-            
+            for (let i = 0; i < questionCount; i++) questions.push(generator.generateQuestion());
             showQuestion();
         }
 
-        function showQuestion() {
-            if (currentQuestionIndex >= questions.length) {
-                showResults();
-                return;
+        function startExamTimer() {
+            clearInterval(examTimer);
+            examTimer = setInterval(() => {
+                examTimeRemaining--;
+                updateExamTimerDisplay();
+                if (examTimeRemaining <= 0) {
+                    clearInterval(examTimer);
+                    for (let i = currentQuestionIndex; i < questions.length; i++) {
+                        userAnswers.push({
+                            question: questions[i].question,
+                            userAnswer: '',
+                            correctAnswer: questions[i].answer,
+                            isCorrect: false,
+                            timeSpent: 0,
+                            explanationSteps: questions[i].explanationSteps,
+                            mathDisplay: questions[i].mathDisplay,
+                            figure: questions[i].figure
+                        });
+                    }
+                    showResults();
+                }
+            }, 1000);
+        }
+
+        function updateExamTimerDisplay() {
+            const mode = document.getElementById('mode').value;
+            if (mode === 'exam') {
+                const timerElement = document.getElementById('timer');
+                if (timerElement) {
+                    const mins = Math.floor(examTimeRemaining / 60);
+                    const secs = examTimeRemaining % 60;
+                    timerElement.textContent = `⏱️ ${mins}:${secs.toString().padStart(2, '0')}`;
+                    if (examTimeRemaining < 60) {
+                        timerElement.style.color = '#dc3545';
+                        timerElement.style.fontWeight = 'bold';
+                    }
+                }
             }
+        }
+
+        function showQuestion() {
+            if (currentQuestionIndex >= questions.length) { clearInterval(examTimer); showResults(); return; }
 
             hasAnswered = false;
             questionStartTime = Date.now();
             const question = questions[currentQuestionIndex];
             const quizContainer = document.getElementById('quizContainer');
-            
+            const mode = document.getElementById('mode').value;
+
             let questionHTML = `
                 <div class="question-header">
                     <div class="question-number">Question ${currentQuestionIndex + 1} / ${questions.length}</div>
-                    <div class="timer" id="timer">⏱️ 0s</div>
+                    <div class="timer" id="timer">⏱️ ${mode === 'exam' ? Math.floor(examTimeRemaining / 60) + ':' + (examTimeRemaining % 60).toString().padStart(2, '0') : '0s'}</div>
                 </div>
-                <div class="question-content">
-                    <div class="question-text">${question.question}</div>
             `;
-            
-            if (question.mathDisplay) {
-                questionHTML += `<div class="math-display">${renderMathDisplay(question.mathDisplay)}</div>`;
+            if (mode === 'exam') {
+                questionHTML += `<div class="mode-info">⚠️ Mode Examen : 9 minutes pour ${questions.length} questions - Pas d'explications</div>`;
             }
-            
-            if (question.figure) {
-                questionHTML += `<div class="figure-container">${question.figure}</div>`;
-            }
-            
+
+            questionHTML += `<div class="question-content"><div class="question-text">${question.question}</div>`;
+            if (question.mathDisplay) questionHTML += `<div class="math-display">${renderMathDisplay(question.mathDisplay)}</div>`;
+            if (question.figure) questionHTML += `<div class="figure-container">${question.figure}</div>`;
+
+            let placeholderText = 'Votre réponse';
+            if (question.unit) placeholderText += ` (en ${question.unit})`;
+            else if (question.type === 'yesno') placeholderText = 'OUI ou NON';
+            else if (question.type === 'time') placeholderText = 'Format: 16h30';
+            else if (question.type === 'fraction') placeholderText = 'Format: 3/4';
+
             questionHTML += `
-                    <input type="text" class="answer-input" id="answerInput" placeholder="Votre réponse${question.unit ? ' (en ' + question.unit + ')' : ''}" onkeypress="if(event.key === 'Enter') validateAnswer()">
+                    <input type="text" class="answer-input" id="answerInput" placeholder="${placeholderText}" onkeypress="if(event.key === 'Enter') validateAnswer()">
                 </div>
                 <div class="question-actions" id="questionActions">
                     <button class="btn-validate" onclick="validateAnswer()">✓ Valider</button>
@@ -1437,45 +945,61 @@
                 </div>
                 <div id="feedback"></div>
             `;
-            
+
             quizContainer.innerHTML = questionHTML;
-            
             document.getElementById('answerInput').focus();
-            startTimer();
+
+            if (mode === 'training') startTimer(); else updateExamTimerDisplay();
         }
 
         function startTimer() {
             clearInterval(timer);
             timeElapsed = 0;
-            
             timer = setInterval(() => {
                 timeElapsed++;
+                const mode = document.getElementById('mode').value;
                 const timerElement = document.getElementById('timer');
-                if (timerElement && !hasAnswered) {
-                    timerElement.textContent = `⏱️ ${timeElapsed}s`;
-                }
+                if (timerElement && !hasAnswered && mode === 'training') timerElement.textContent = `⏱️ ${timeElapsed}s`;
             }, 1000);
         }
 
         function validateAnswer() {
             if (hasAnswered) return;
-            
-            clearInterval(timer);
+            const mode = document.getElementById('mode').value;
+            if (mode === 'training') clearInterval(timer);
             hasAnswered = true;
-            
+
             const timeSpent = Math.round((Date.now() - questionStartTime) / 1000);
             questionTimes.push(timeSpent);
-            
+
             const userAnswer = document.getElementById('answerInput').value.trim();
             const currentQuestion = questions[currentQuestionIndex];
             const correctAnswer = currentQuestion.answer;
-            
-            // Normaliser les réponses pour la comparaison
-            const normalizedUserAnswer = userAnswer.toLowerCase().replace(',', '.').replace(/\s/g, '');
-            const normalizedCorrectAnswer = correctAnswer.toString().toLowerCase().replace(',', '.').replace(/\s/g, '');
-            
-            const isCorrect = normalizedUserAnswer === normalizedCorrectAnswer;
-            
+
+            // Normalisation & comparaison
+            let normalizedUserAnswer = normalizeNumberLike(userAnswer);
+            let normalizedCorrectAnswer = normalizeNumberLike(correctAnswer);
+
+            if (currentQuestion.type === 'yesno') {
+                normalizedUserAnswer = normalizedUserAnswer.toUpperCase();
+                normalizedCorrectAnswer = normalizedCorrectAnswer.toUpperCase();
+            }
+
+            if (currentQuestion.type === 'time' || currentQuestion.type === 'time_format') {
+                const fix = s => s
+                    .replace(/(\d+)h(\d)(?!\d)/, (_, H, m) => `${H}h0${m}`)
+                    .replace(/^(\d+)h$/, '$1h00');
+                normalizedUserAnswer = fix(normalizedUserAnswer);
+                normalizedCorrectAnswer = fix(normalizedCorrectAnswer);
+            }
+
+            let isCorrect;
+            if (currentQuestion.type === 'numerical' || currentQuestion.type === 'time_format') {
+                isCorrect = isNumericEquivalent(normalizedUserAnswer, normalizedCorrectAnswer);
+            } else {
+                isCorrect = normalizedUserAnswer === normalizedCorrectAnswer;
+            }
+
             userAnswers.push({
                 question: currentQuestion.question,
                 userAnswer: userAnswer,
@@ -1484,46 +1008,44 @@
                 timeSpent: timeSpent,
                 explanationSteps: currentQuestion.explanationSteps,
                 mathDisplay: currentQuestion.mathDisplay,
-                figure: currentQuestion.figure
+                figure: currentQuestion.figure,
+                unit: currentQuestion.unit
             });
-            
-            const feedback = document.getElementById('feedback');
-            feedback.className = 'feedback ' + (isCorrect ? 'correct' : 'incorrect');
-            
-            let feedbackHTML = isCorrect 
-                ? `✓ Correct ! Bien joué ! (Temps: ${timeSpent}s)` 
-                : `✗ Incorrect. La bonne réponse était : ${correctAnswer}${currentQuestion.unit ? ' ' + currentQuestion.unit : ''} (Temps: ${timeSpent}s)`;
-            
-            // Ajouter l'explication détaillée
-            if (currentQuestion.explanationSteps) {
-                feedbackHTML += `
-                    <div class="explanation-box ${isCorrect ? 'correct' : 'incorrect'}">
-                        <strong>📝 Explication :</strong>
-                        ${renderExplanation(currentQuestion.explanationSteps)}
-                    </div>`;
+
+            if (mode === 'training') {
+                const feedback = document.getElementById('feedback');
+                feedback.className = 'feedback ' + (isCorrect ? 'correct' : 'incorrect');
+                let feedbackHTML = isCorrect
+                    ? `✓ Correct ! Bien joué ! (Temps: ${timeSpent}s)`
+                    : `✗ Incorrect. La bonne réponse était : ${correctAnswer}${currentQuestion.unit ? ' ' + currentQuestion.unit : ''} (Temps: ${timeSpent}s)`;
+
+                if (currentQuestion.explanationSteps) {
+                    feedbackHTML += `
+                        <div class="explanation-box ${isCorrect ? 'correct' : 'incorrect'}">
+                            <strong>📝 Explication :</strong>
+                            ${renderExplanation(currentQuestion.explanationSteps)}
+                        </div>`;
+                }
+                feedback.innerHTML = feedbackHTML;
+
+                const actionsDiv = document.getElementById('questionActions');
+                actionsDiv.innerHTML = '<button class="btn-next" onclick="nextQuestion()">Suivant →</button>';
+                document.getElementById('answerInput').disabled = true;
+            } else {
+                nextQuestion();
             }
-            
-            feedback.innerHTML = feedbackHTML;
-            
-            // Remplacer les boutons par un bouton "Suivant"
-            const actionsDiv = document.getElementById('questionActions');
-            actionsDiv.innerHTML = '<button class="btn-next" onclick="nextQuestion()">Suivant →</button>';
-            
-            // Désactiver l'input
-            document.getElementById('answerInput').disabled = true;
         }
 
         function skipQuestion() {
             if (hasAnswered) return;
-            
-            clearInterval(timer);
+            const mode = document.getElementById('mode').value;
+            if (mode === 'training') clearInterval(timer);
             hasAnswered = true;
-            
+
             const timeSpent = Math.round((Date.now() - questionStartTime) / 1000);
             questionTimes.push(timeSpent);
-            
+
             const currentQuestion = questions[currentQuestionIndex];
-            
             userAnswers.push({
                 question: currentQuestion.question,
                 userAnswer: '',
@@ -1532,31 +1054,28 @@
                 timeSpent: timeSpent,
                 explanationSteps: currentQuestion.explanationSteps,
                 mathDisplay: currentQuestion.mathDisplay,
-                figure: currentQuestion.figure
+                figure: currentQuestion.figure,
+                unit: currentQuestion.unit
             });
-            
-            const feedback = document.getElementById('feedback');
-            feedback.className = 'feedback incorrect';
-            
-            let feedbackHTML = `✗ Question passée. La bonne réponse était : ${currentQuestion.answer}${currentQuestion.unit ? ' ' + currentQuestion.unit : ''} (Temps: ${timeSpent}s)`;
-            
-            // Ajouter l'explication détaillée
-            if (currentQuestion.explanationSteps) {
-                feedbackHTML += `
-                    <div class="explanation-box incorrect">
-                        <strong>📝 Explication :</strong>
-                        ${renderExplanation(currentQuestion.explanationSteps)}
-                    </div>`;
+
+            if (mode === 'training') {
+                const feedback = document.getElementById('feedback');
+                feedback.className = 'feedback incorrect';
+                let feedbackHTML = `✗ Question passée. La bonne réponse était : ${currentQuestion.answer}${currentQuestion.unit ? ' ' + currentQuestion.unit : ''} (Temps: ${timeSpent}s)`;
+                if (currentQuestion.explanationSteps) {
+                    feedbackHTML += `
+                        <div class="explanation-box incorrect">
+                            <strong>📝 Explication :</strong>
+                            ${renderExplanation(currentQuestion.explanationSteps)}
+                        </div>`;
+                }
+                feedback.innerHTML = feedbackHTML;
+                const actionsDiv = document.getElementById('questionActions');
+                actionsDiv.innerHTML = '<button class="btn-next" onclick="nextQuestion()">Suivant →</button>';
+                document.getElementById('answerInput').disabled = true;
+            } else {
+                nextQuestion();
             }
-            
-            feedback.innerHTML = feedbackHTML;
-            
-            // Remplacer les boutons par un bouton "Suivant"
-            const actionsDiv = document.getElementById('questionActions');
-            actionsDiv.innerHTML = '<button class="btn-next" onclick="nextQuestion()">Suivant →</button>';
-            
-            // Désactiver l'input
-            document.getElementById('answerInput').disabled = true;
         }
 
         function nextQuestion() {
@@ -1565,30 +1084,29 @@
         }
 
         function showResults() {
+            clearInterval(timer);
+            clearInterval(examTimer);
+
             const correctCount = userAnswers.filter(a => a.isCorrect).length;
             const percentage = Math.round((correctCount / questions.length) * 100);
             const totalTime = questionTimes.reduce((a, b) => a + b, 0);
-            const avgTime = Math.round(totalTime / questions.length);
-            
+            const avgTime = questions.length > 0 ? Math.round(totalTime / questions.length) : 0;
+            const mode = document.getElementById('mode').value;
+
             const quizContainer = document.getElementById('quizContainer');
-            
+
             let reviewHTML = '';
             userAnswers.forEach((answer, index) => {
                 let questionReview = `
                     <div class="question-review ${answer.isCorrect ? 'correct' : 'incorrect'}">
                         <strong>Q${index + 1}:</strong> ${answer.question}<br>
                 `;
-                
-                if (answer.figure) {
-                    questionReview += `<div class="figure-container">${answer.figure}</div>`;
-                }
-                
+                if (answer.figure) questionReview += `<div class="figure-container">${answer.figure}</div>`;
                 questionReview += `
                         <strong>Votre réponse:</strong> ${answer.userAnswer || 'Pas de réponse'}<br>
-                        <strong>Réponse correcte:</strong> ${answer.correctAnswer}<br>
-                        <div class="time-info">⏱️ Temps: ${answer.timeSpent}s</div>
+                        <strong>Réponse correcte:</strong> ${answer.correctAnswer}${answer.unit ? ' ' + answer.unit : ''}<br>
                 `;
-                
+                if (mode === 'training') questionReview += `<div class="time-info">⏱️ Temps: ${answer.timeSpent}s</div>`;
                 if (answer.explanationSteps) {
                     questionReview += `
                         <div class="review-explanation">
@@ -1597,45 +1115,58 @@
                         </div>
                     `;
                 }
-                
                 questionReview += `</div>`;
                 reviewHTML += questionReview;
             });
-            
-            quizContainer.innerHTML = `
-                <div class="results">
-                    <h2>🎯 Résultats du test</h2>
-                    <div class="score">${correctCount} / ${questions.length}</div>
-                    <p style="font-size: 1.2em; color: #666;">Score: ${percentage}%</p>
-                    
+
+            let statsHTML = '';
+            if (mode === 'training') {
+                statsHTML = `
                     <div style="background: #e3f2fd; padding: 15px; border-radius: 10px; margin: 20px 0;">
                         <h3 style="color: #1976d2; margin-bottom: 10px;">📊 Statistiques de temps</h3>
                         <p style="font-size: 1.1em; color: #333;">
                             Temps total : ${formatTime(totalTime)}<br>
                             Temps moyen par question : ${avgTime}s<br>
-                            Question la plus rapide : ${Math.min(...questionTimes)}s<br>
-                            Question la plus longue : ${Math.max(...questionTimes)}s
+                            ${questionTimes.length > 0 ? `Question la plus rapide : ${Math.min(...questionTimes)}s<br>` : ''}
+                            ${questionTimes.length > 0 ? `Question la plus longue : ${Math.max(...questionTimes)}s` : ''}
                         </p>
                     </div>
-                    
+                `;
+            } else {
+                const timeUsed = 540 - examTimeRemaining;
+                statsHTML = `
+                    <div style="background: #fff3cd; padding: 15px; border-radius: 10px; margin: 20px 0;">
+                        <h3 style="color: #856404; margin-bottom: 10px;">⏱️ Mode Examen</h3>
+                        <p style="font-size: 1.1em; color: #333;">
+                            Temps utilisé : ${formatTime(timeUsed)} sur 9 minutes<br>
+                            ${timeUsed > 540 ? '<span style="color: red;">Temps dépassé !</span>' : 'Test complété dans le temps imparti'}
+                        </p>
+                    </div>
+                `;
+            }
+
+            quizContainer.innerHTML = `
+                <div class="results">
+                    <h2>🎯 Résultats du test</h2>
+                    <div class="score">${correctCount} / ${questions.length}</div>
+                    <p style="font-size: 1.2em; color: #666;">Score: ${percentage}%</p>
+                    ${statsHTML}
                     <div class="results-details">
-                        <h3>📊 Détail des réponses avec explications</h3>
+                        <h3>📊 Détail des réponses${mode === 'training' ? ' avec explications' : ''}</h3>
                         ${reviewHTML}
                     </div>
-                    
                     <button onclick="location.reload()">🔄 Nouveau test</button>
                 </div>
             `;
         }
 
-        // Initialisation au chargement de la page
-        document.addEventListener('DOMContentLoaded', function() {
-            // Rendre KaTeX disponible globalement si nécessaire
+        // ===== Initialisation =====
+        document.addEventListener('DOMContentLoaded', function () {
             if (typeof renderMathInElement !== 'undefined') {
                 renderMathInElement(document.body, {
                     delimiters: [
-                        {left: '$', right: '$', display: true},
-                        {left: ', right: ', display: false}
+                        { left: "$$", right: "$$", display: true },
+                        { left: "$", right: "$", display: false }
                     ]
                 });
             }
