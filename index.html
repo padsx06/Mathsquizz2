@@ -312,11 +312,15 @@
                 };
             }
 
+            // PATCH: éviter cas ultra-évidents (50% de 100, 25% de 100, etc.)
             generatePercentageSimple() {
-                const percentages = [10, 20, 25, 50, 75];
-                const percent = percentages[this.random(0, percentages.length - 1)];
-                const values = [40, 60, 64, 80, 100, 120, 160];
-                const value = values[this.random(0, values.length - 1)];
+                const percentages = [10, 20, 25, 30, 40, 60, 75];
+                const values = [48, 56, 64, 72, 84, 96, 120, 160];
+                let percent, value;
+                do {
+                    percent = percentages[this.random(0, percentages.length - 1)];
+                    value = values[this.random(0, values.length - 1)];
+                } while ((percent === 50 && value % 100 === 0) || (percent === 25 && value % 100 === 0));
                 const result = (value * percent) / 100;
                 return {
                     question: `${percent}% de ${value}`,
@@ -397,10 +401,14 @@
                 };
             }
 
+            // PATCH: éviter restes triviaux (0,1,div-1)
             generateEuclideanDivisionRemainder() {
-                const divisor = this.random(5, 9);
-                const quotient = this.random(4, 8);
-                const remainder = this.random(1, divisor - 1);
+                const divisor = this.random(5, 12);
+                const quotient = this.random(4, 12);
+                let remainder;
+                do {
+                    remainder = this.random(2, divisor - 2);
+                } while (remainder <= 1 || remainder >= divisor - 1);
                 const dividend = divisor * quotient + remainder;
                 return {
                     question: `Le reste de la division euclidienne de ${dividend} par ${divisor} est :`,
@@ -473,12 +481,10 @@
                 const rows = 4, cols = 4;
                 const filled = this.random(3, 8);
                 const total = rows * cols;
-                // Simplification
                 let num = filled, den = total;
                 for (let i = 2; i <= Math.min(num, den); i++) {
                     while (num % i === 0 && den % i === 0) { num /= i; den /= i; }
                 }
-                // Grille
                 let gridHTML = '<div class="grid-container"><div class="grid" style="grid-template-columns: repeat(4, 1fr);">';
                 for (let i = 0; i < total; i++) gridHTML += `<div class="grid-cell ${i < filled ? 'filled' : ''}"></div>`;
                 gridHTML += '</div></div>';
@@ -505,7 +511,7 @@
                     question: `${a} + ${b} × ${c}`,
                     answer: result.toString(),
                     type: 'numerical',
-                    mathDisplay: `${a} + ${b} \\times ${c} = ?`,
+                    mathDisplay: `${a} \\times ${b} + ${c}`,
                     explanationSteps: [
                         `\\text{Priorité : multiplication}`,
                         `${a} + ${b} \\times ${c}`,
@@ -600,12 +606,22 @@
                 };
             }
 
+            // PATCH: éviter couples qui donnent des centaines trop faciles (20×5, 25×4)
             generateProductCalculation() {
-                const factors = [2, 3, 4, 5, 10, 20, 25, 50];
-                const a = factors[this.random(0, factors.length - 1)];
-                const b = factors[this.random(0, factors.length - 1)];
-                const c = this.random(2, 5);
-                const d = factors[this.random(0, factors.length - 1)];
+                const pool = [2, 3, 4, 5, 6, 8, 9, 12, 15, 20, 25, 50]; // pas de 10
+                let a = pool[this.random(0, pool.length - 1)];
+                let b = pool[this.random(0, pool.length - 1)];
+                let c = this.random(3, 7);
+                let d = pool[this.random(0, pool.length - 1)];
+
+                const badPair = (x, y) =>
+                    (x === 20 && y === 5) || (x === 5 && y === 20) ||
+                    (x === 25 && y === 4) || (x === 4 && y === 25);
+
+                if (badPair(a,b)) b = 6;
+                if (badPair(a,d)) d = 6;
+                if (badPair(b,d)) d = 6;
+
                 const result = a * b * c * d;
                 return {
                     question: `${a} × ${b} × ${c} × ${d}`,
@@ -813,12 +829,18 @@
                 };
             }
 
+            // PATCH: éviter a,b consécutifs (diff=1) ou trop proches (diff=2)
             generateProductSumDifference() {
-                const a = this.random(6, 12);
-                const b = this.random(7, 13);
+                let a, b, diff;
+                do {
+                    a = this.random(8, 20);
+                    b = this.random(8, 20);
+                    diff = Math.abs(a - b);
+                } while (a === b || diff < 3 || diff > 9);
+
                 const sum = a + b;
-                const diff = Math.abs(a - b);
                 const product = sum * diff;
+
                 return {
                     question: `Le produit de la somme de ${a} et ${b} par la différence de ${Math.max(a,b)} et ${Math.min(a,b)} est égal à :`,
                     answer: product.toString(),
