@@ -999,22 +999,25 @@
 
             const generator = new QuestionGenerator();
 const seen = new Set();
-for (let i = 0; i < questionCount; i++) {
+for (let i = 0; i < questionCount; i++) 
+{
     let q, tries = 0;
     do {
         q = generator.generateQuestion();
         tries++;
         // clé basée sur l'énoncé (question + mathDisplay si présent)
         const key = q.question + '|' + (q.mathDisplay || '') + '|' + (q.figure ? '[fig]' : '');
-        if (!seen.has(key)) {
+        if (!seen.has(key)) 
+        {
             seen.add(key);
             questions.push(q);
             break;
         }
-    } while (tries < 20);
+        } while (tries < 20);
 
     // En dernier recours, si on n'a rien pu ajouter (extrêmement rare), on pousse la dernière version
-    if (tries >= 20 && questions.length < i + 1) {
+    if (tries >= 20 && questions.length < i + 1) 
+    {
         questions.push(q);
     }
 }
@@ -1325,6 +1328,10 @@ for (let i = 0; i < questionCount; i++) {
     });
 }
 });
+window.startQuiz = startQuiz;
+  window.validateAnswer = validateAnswer;
+  window.skipQuestion = skipQuestion;
+  window.nextQuestion = nextQuestion;
     </script>
 </body>
 </html>
