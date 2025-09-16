@@ -64,6 +64,7 @@
         .review-explanation { margin-top: 10px; padding: 10px; background: #f5f5f5; border-radius: 5px; border-left: 3px solid #9c27b0; }
         .time-info { background: #e3f2fd; padding: 10px 15px; border-radius: 8px; margin: 10px 0; color: #1976d2; font-weight: bold; }
         .hidden { display: none; }
+        .figure-container svg {overflow: visible; /* évite que des libellés/pointes de flèches soient rognés */}
         @media (max-width: 600px) {
             .controls { flex-direction: column; }
             .control-group { width: 100%; justify-content: space-between; }
@@ -641,21 +642,25 @@
             }
 
             generateTimeConversion() {
-                const hours = this.randomFloat(1, 3, 1);
-                const wholeHours = Math.floor(hours);
-                const minutes = Math.round((hours - wholeHours) * 60); // 0..59
-                const answer = `${wholeHours}h${minutes.toString().padStart(2,'0')}min`;
-                return {
-                    question: `Complète : ${toFrenchNumber(hours)}h = ...h ...min`,
-                    answer: answer,
-                    type: 'time_format',
-                    explanationSteps: [
-                        `${toFrenchNumber(hours)}\\text{h} = ${wholeHours}\\text{h} + ${toFrenchNumber(hours - wholeHours)}\\text{h}`,
-                        `${toFrenchNumber(hours - wholeHours)}\\text{h} = 60\\times${toFrenchNumber(hours - wholeHours)}\\text{min} = ${minutes}\\text{min}`,
-                        `\\text{Donc } ${toFrenchNumber(hours)}\\text{h} = ${wholeHours}\\text{h}${minutes.toString().padStart(2,'0')}\\text{min}`
-                    ]
-                };
-            }
+    const hours = this.randomFloat(1, 3, 1);          // ex: 1.3
+    const wholeHours = Math.floor(hours);             // ex: 1
+    const frac = +(hours - wholeHours).toFixed(2);    // ex: 0.30 (écrasement artefacts binaires)
+    const minutes = Math.round(frac * 60);            // ex: 18
+
+    const answer = `${wholeHours}h${minutes.toString().padStart(2,'0')}min`;
+
+    return {
+        question: `Complète : ${toFrenchNumber(hours,1)}h = ...h ...min`,
+        answer: answer,
+        type: 'time_format',
+        explanationSteps: [
+            `${toFrenchNumber(hours,1)}\\text{h} = ${wholeHours}\\text{h} + ${toFrenchNumber(frac,1)}\\text{h}`,
+            `${toFrenchNumber(frac,1)}\\text{h} = 60\\times${toFrenchNumber(frac,1)}\\text{ min} = ${minutes}\\text{ min}`,
+            `\\text{Donc } ${toFrenchNumber(hours,1)}\\text{h} = ${wholeHours}\\text{h}${minutes.toString().padStart(2,'0')}\\text{min}`
+        ]
+    };
+}
+
 
             // PATCH: éviter couples qui donnent des centaines trop faciles (20×5, 25×4)
             generateProductCalculation() {
@@ -854,26 +859,26 @@
             }
 
          generatePolygonArea() {
-    // Dimensions en cm (entiers pour des mesures nettes)
-    const base = this.random(4, 7);    // b
-    const height = this.random(2, 4);  // h
+    // Données entières pour des mesures nettes
+    const base = this.random(4, 7);    // b (cm)
+    const height = this.random(2, 4);  // h (cm)
 
     const area = base * height + (base * height) / 2; // b*h + (b*h)/2
 
-    // Mise à l'échelle (px par cm)
+    // Échelle (px par cm) + marges généreuses
     const scale = 24;
-    const W = base * scale;   // largeur rectangle
-    const H = height * scale; // hauteur rectangle (et du triangle)
+    const W = base * scale;
+    const H = height * scale;
 
-    // Layout généreux pour ne rien couper
-    const x0 = 70;          // bas-gauche du rectangle
-    const y0 = 220;         // baseline (plus bas qu'avant)
+    // Décalages pour que tout rentre largement
+    const x0 = 90;          // bas-gauche rectangle (plus de marge à gauche)
+    const y0 = 260;         // baseline plus basse
     const apexY = y0 - 2 * H;
 
-    const widthPx  = Math.max(320, x0 + W + 100);
-    const heightPx = Math.max(260, y0 + 40);
+    const widthPx  = Math.max(360, x0 + W + 140); // marge à droite
+    const heightPx = Math.max(320, y0 + 40);      // marge en bas
 
-    // Points du polygone (un seul)
+    // Points du polygone unique (rectangle + triangle isocèle)
     const BL = [x0, y0];
     const BR = [x0 + W, y0];
     const TR = [x0 + W, y0 - H];
@@ -889,31 +894,30 @@
                 </marker>
             </defs>
 
-            <!-- Polygone grisé (rectangle + triangle) -->
+            <!-- Polygone grisé -->
             <polygon 
                 points="${BL[0]},${BL[1]} ${BR[0]},${BR[1]} ${TR[0]},${TR[1]} ${AP[0]},${AP[1]} ${TL[0]},${TL[1]}"
                 fill="rgba(136,136,136,0.3)" stroke="#667eea" stroke-width="2"
             />
 
-            <!-- Hauteur du triangle (altitude), en pointillés à l'intérieur -->
+            <!-- Altitude du triangle (pointillés) + marque d'angle droit -->
             <line x1="${AP[0]}" y1="${AP[1]}" x2="${AP[0]}" y2="${TL[1]}" stroke="#9c27b0" stroke-width="2" stroke-dasharray="6,4"/>
-            <!-- Marque d'angle droit au pied de l'altitude -->
             <path d="M ${AP[0]-10} ${TL[1]} L ${AP[0]-10} ${TL[1]-10} L ${AP[0]} ${TL[1]-10}" fill="none" stroke="#9c27b0" stroke-width="2"/>
 
-            <!-- Cote: base b (en dehors, sous la figure) -->
-            <line x1="${BL[0]}" y1="${BL[1] + 16}" x2="${BR[0]}" y2="${BR[1] + 16}" stroke="#333" stroke-width="1.5"
-                  marker-start="url(#arrow)" marker-end="url(#arrow)"/>
-            <text x="${(BL[0] + BR[0]) / 2}" y="${BR[1] + 32}" text-anchor="middle" font-size="13" fill="#333">${base} cm (base)</text>
+            <!-- Cote base b (dessous, avec flèches) -->
+            <line x1="${BL[0]}" y1="${BL[1] + 18}" x2="${BR[0]}" y2="${BR[1] + 18}"
+                  stroke="#333" stroke-width="1.5" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+            <text x="${(BL[0] + BR[0]) / 2}" y="${BR[1] + 36}" text-anchor="middle" font-size="13" fill="#333">${base} cm (base)</text>
 
-            <!-- Cote: hauteur h du rectangle (à gauche, en dehors) -->
-            <line x1="${TL[0] - 18}" y1="${BL[1]}" x2="${TL[0] - 18}" y2="${TL[1]}" stroke="#333" stroke-width="1.5"
-                  marker-start="url(#arrow)" marker-end="url(#arrow)"/>
-            <text x="${TL[0] - 22}" y="${(BL[1] + TL[1]) / 2}" text-anchor="end" font-size="13" fill="#333">${height} cm (h rect.)</text>
+            <!-- Cote h du rectangle (à GAUCHE, mais à l'intérieur pour ne rien couper) -->
+            <line x1="${TL[0] + 14}" y1="${BL[1]}" x2="${TL[0] + 14}" y2="${TL[1]}"
+                  stroke="#333" stroke-width="1.5" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+            <text x="${TL[0] + 18}" y="${(BL[1] + TL[1]) / 2}" text-anchor="start" font-size="13" fill="#333">${height} cm (h rect.)</text>
 
-            <!-- Cote: hauteur h du triangle (à droite, en dehors) -->
-            <line x1="${BR[0] + 18}" y1="${TL[1]}" x2="${BR[0] + 18}" y2="${AP[1]}" stroke="#333" stroke-width="1.5"
-                  marker-start="url(#arrow)" marker-end="url(#arrow)"/>
-            <text x="${BR[0] + 22}" y="${(TL[1] + AP[1]) / 2}" text-anchor="start" font-size="13" fill="#333">${height} cm (h tri.)</text>
+            <!-- Cote h du triangle (à DROITE, à l'intérieur aussi) -->
+            <line x1="${TR[0] - 14}" y1="${TL[1]}" x2="${TR[0] - 14}" y2="${AP[1]}"
+                  stroke="#333" stroke-width="1.5" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+            <text x="${TR[0] - 18}" y="${(TL[1] + AP[1]) / 2}" text-anchor="end" font-size="13" fill="#333">${height} cm (h tri.)</text>
         </svg>
     `;
 
@@ -931,6 +935,7 @@
         ]
     };
 }
+
 
             // PATCH: éviter a,b consécutifs (diff=1) ou trop proches (diff=2)
             generateProductSumDifference() {
@@ -957,22 +962,25 @@
             }
 
             generatePowerOfSix() {
-                const result = 6 - 6 / 6 * 6 + 6 * 6; // = 36
-                return {
-                    question: '6 - 6 ÷ 6 × 6 + 6 × 6',
-                    answer: result.toString(),
-                    type: 'numerical',
-                    mathDisplay: `6 - 6 \\div 6 \\times 6 + 6 \\times 6 = ?`,
-                    explanationSteps: [
-                        `\\text{Priorité : divisions et multiplications de gauche à droite}`,
-                        `6 - (6 \\div 6) \\times 6 + 6 \\times 6`,
-                        `= 6 - 1 \\times 6 + 6 \\times 6`,
-                        `= 6 - 6 + 36`,
-                        `= ${result}`
-                    ]
-                };
-            }
-        }
+    // On choisit un chiffre d entre 3 et 9 pour varier l'expression
+    const d = this.random(3, 9);
+    const result = d - (d / d) * d + d * d; // = d - 1*d + d^2 = d^2
+
+    return {
+        question: `${d} - ${d} ÷ ${d} × ${d} + ${d} × ${d}`,
+        answer: result.toString(),
+        type: 'numerical',
+        mathDisplay: `${d} - ${d} \\div ${d} \\times ${d} + ${d} \\times ${d} = ?`,
+        explanationSteps: [
+            `\\text{Priorité : divisions et multiplications de gauche à droite}`,
+            `${d} - (${d} \\div ${d}) \\times ${d} + ${d} \\times ${d}`,
+            `= ${d} - 1 \\times ${d} + ${d} \\times ${d}`,
+            `= ${d} - ${d} + ${d}\\,^2`,
+            `= ${d}\\,^2 = ${result}`
+        ]
+    };
+}
+
 
         // ===== Flux principal =====
         function startQuiz() {
@@ -988,9 +996,27 @@
             if (mode === 'exam') { examTimeRemaining = 540; startExamTimer(); }
 
             const generator = new QuestionGenerator();
-            for (let i = 0; i < questionCount; i++) questions.push(generator.generateQuestion());
-            showQuestion();
+const seen = new Set();
+for (let i = 0; i < questionCount; i++) {
+    let q, tries = 0;
+    do {
+        q = generator.generateQuestion();
+        tries++;
+        // clé basée sur l'énoncé (question + mathDisplay si présent)
+        const key = q.question + '|' + (q.mathDisplay || '') + '|' + (q.figure ? '[fig]' : '');
+        if (!seen.has(key)) {
+            seen.add(key);
+            questions.push(q);
+            break;
         }
+    } while (tries < 20);
+
+    // En dernier recours, si on n'a rien pu ajouter (extrêmement rare), on pousse la dernière version
+    if (tries >= 20 && questions.length < i + 1) {
+        questions.push(q);
+    }
+}
+
 
         function startExamTimer() {
             clearInterval(examTimer);
