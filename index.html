@@ -424,33 +424,46 @@
             }
 
             generateMissingValueProportion() {
-    // Axe de 0 à 200 gradué tous les 10, labels tous les 20
-    const rangeMin = 0;
-    const rangeMax = 200;
-    const step = 10;
+    // Échelles possibles (entiers)
+    const steps = [1, 2, 5, 10, 20];
+    const step = steps[this.random(0, steps.length - 1)];
 
-    // Abscisse de A choisie pour ne PAS tomber sur une graduation "pile" (pas multiple de 10)
-    let a;
-    do {
-        a = this.random(15, 185);
-    } while (a % 10 === 0);
+    // Nombre de graduations (12 à 18 pour une lisibilité OK à ~520px)
+    const tickCount = this.random(12, 18);
+    const totalRange = step * (tickCount - 1);
 
-    // Mise en page SVG
-    const padL = 30, padR = 30;
+    // Min débutant sur un multiple de "step" (évite des labels moches)
+    const minCandidates = [0, step * 2, step * 4, step * 5];
+    const rangeMin = minCandidates[this.random(0, minCandidates.length - 1)];
+    const rangeMax = rangeMin + totalRange;
+
+    // On étiquette 1 label toutes les N graduations (2, 5, 10 selon le step/tickCount)
+    let labelEvery = 2;
+    if (tickCount >= 16 && step <= 2) labelEvery = 3;
+    if (step >= 10) labelEvery = 1; // si grandes marches, on peut tout labeller
+
+    // Choix de A : EXACTEMENT sur une graduation et pas trop collé aux bords
+    const k = this.random(2, tickCount - 3);
+    const a = rangeMin + k * step;
+
+    // SVG layout
     const widthPx = 520, heightPx = 120;
+    const padL = 30, padR = 30;
     const axisY = 70;
-    const axisX0 = padL;
-    const axisX1 = widthPx - padR;
+    const axisX0 = padL, axisX1 = widthPx - padR;
     const axisLength = axisX1 - axisX0;
     const pxPerUnit = axisLength / (rangeMax - rangeMin);
-
     const xOf = v => axisX0 + (v - rangeMin) * pxPerUnit;
 
-    // Graduations (ticks)
+    // Graduations
     const ticks = [];
-    for (let v = rangeMin; v <= rangeMax; v += step) {
-        const x = xOf(v);
-        ticks.push({ x, label: (v % 20 === 0) ? v.toString() : null });
+    for (let i = 0; i < tickCount; i++) {
+        const v = rangeMin + i * step;
+        ticks.push({
+            v,
+            x: xOf(v),
+            isMajor: (i % labelEvery === 0)
+        });
     }
 
     const figure = `
@@ -458,15 +471,20 @@
             <!-- Axe -->
             <line x1="${axisX0}" y1="${axisY}" x2="${axisX1}" y2="${axisY}" stroke="#333" stroke-width="2"/>
 
-            <!-- Graduations -->
-            ${ticks.map(t => `
-                <line x1="${t.x}" y1="${axisY - 5}" x2="${t.x}" y2="${axisY + 5}" stroke="#333" stroke-width="1.5"/>
-                ${t.label ? `<text x="${t.x}" y="${axisY + 22}" text-anchor="middle" font-size="12" fill="#333">${t.label}</text>` : ''}
+            <!-- Graduations + labels -->
+            ${ticks.map((t, i) => `
+                <line x1="${t.x}" y1="${axisY - (t.isMajor ? 7 : 5)}" x2="${t.x}" y2="${axisY + (t.isMajor ? 7 : 5)}" stroke="#333" stroke-width="1.5"/>
+                ${t.isMajor ? `<text x="${t.x}" y="${axisY + 22}" text-anchor="middle" font-size="12" fill="#333">${t.v}</text>` : ''}
             `).join('')}
 
-            <!-- Point A (sans valeur numérique affichée directement) -->
+            <!-- Point A exactement sur une graduation -->
             <circle cx="${xOf(a)}" cy="${axisY}" r="4" fill="#667eea"/>
             <text x="${xOf(a)}" y="${axisY - 12}" text-anchor="middle" font-size="14" fill="#333">A</text>
+
+            <!-- Rappel d'échelle (optionnel) -->
+            <text x="${axisX1}" y="${axisY - 30}" text-anchor="end" font-size="12" fill="#666">
+                pas = ${step}
+            </text>
         </svg>
     `;
 
@@ -476,8 +494,8 @@
         type: 'numerical',
         figure,
         explanationSteps: [
-            `\\text{On lit l'abscisse du point A sur la droite graduée : } ${a}.`,
-            `\\text{Donc l'abscisse de A est } ${a}.`
+            `\\text{A est placé sur une graduation numérotée tous les ${labelEvery} ticks, pas } ${step}.`,
+            `\\text{On lit sur l'axe : } ${a}.`
         ]
     };
 }
@@ -835,50 +853,67 @@
                 };
             }
 
-            generatePolygonArea() {
-    // b = base (cm), h = hauteur (cm)
+         generatePolygonArea() {
+    // Dimensions en cm (entiers pour des mesures nettes)
     const base = this.random(4, 7);    // b
     const height = this.random(2, 4);  // h
+
     const area = base * height + (base * height) / 2; // b*h + (b*h)/2
 
-    // Échelle en pixels
-    const scale = 22;
-    const W = base * scale;   // largeur du rectangle
-    const H = height * scale; // hauteur du rectangle (et du triangle)
+    // Mise à l'échelle (px par cm)
+    const scale = 24;
+    const W = base * scale;   // largeur rectangle
+    const H = height * scale; // hauteur rectangle (et du triangle)
 
-    // Origine du rectangle (coin bas-gauche)
-    const x0 = 60;
-    const y0 = 120; // baseline
+    // Layout généreux pour ne rien couper
+    const x0 = 70;          // bas-gauche du rectangle
+    const y0 = 220;         // baseline (plus bas qu'avant)
+    const apexY = y0 - 2 * H;
 
-    // Points du polygone unique = rectangle + triangle isocèle au-dessus
+    const widthPx  = Math.max(320, x0 + W + 100);
+    const heightPx = Math.max(260, y0 + 40);
+
+    // Points du polygone (un seul)
     const BL = [x0, y0];
     const BR = [x0 + W, y0];
     const TR = [x0 + W, y0 - H];
-    const AP = [x0 + W / 2, y0 - 2 * H]; // apex du triangle
+    const AP = [x0 + W / 2, apexY];
     const TL = [x0, y0 - H];
-
-    const widthPx = Math.max(260, x0 + W + 60);
-    const heightPx = Math.max(200, y0 + 40);
 
     const figure = `
         <svg width="${widthPx}" height="${heightPx}" viewBox="0 0 ${widthPx} ${heightPx}">
-            <!-- Polygone grisé (un seul) -->
+            <defs>
+                <!-- Flèches de cote -->
+                <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 0 L 10 5 L 0 10 z" fill="#333"></path>
+                </marker>
+            </defs>
+
+            <!-- Polygone grisé (rectangle + triangle) -->
             <polygon 
                 points="${BL[0]},${BL[1]} ${BR[0]},${BR[1]} ${TR[0]},${TR[1]} ${AP[0]},${AP[1]} ${TL[0]},${TL[1]}"
                 fill="rgba(136,136,136,0.3)" stroke="#667eea" stroke-width="2"
             />
 
-            <!-- Cotes pour compréhension -->
-            <!-- Base b -->
-            <line x1="${BL[0]}" y1="${BL[1] + 8}" x2="${BR[0]}" y2="${BR[1] + 8}" stroke="#333" stroke-width="1" stroke-dasharray="4,3"/>
-            <text x="${(BL[0] + BR[0]) / 2}" y="${BR[1] + 24}" text-anchor="middle" font-size="13" fill="#333">${base} cm (base)</text>
+            <!-- Hauteur du triangle (altitude), en pointillés à l'intérieur -->
+            <line x1="${AP[0]}" y1="${AP[1]}" x2="${AP[0]}" y2="${TL[1]}" stroke="#9c27b0" stroke-width="2" stroke-dasharray="6,4"/>
+            <!-- Marque d'angle droit au pied de l'altitude -->
+            <path d="M ${AP[0]-10} ${TL[1]} L ${AP[0]-10} ${TL[1]-10} L ${AP[0]} ${TL[1]-10}" fill="none" stroke="#9c27b0" stroke-width="2"/>
 
-            <!-- Hauteur h -->
-            <line x1="${TL[0] - 10}" y1="${BL[1]}" x2="${TL[0] - 10}" y2="${TL[1]}" stroke="#333" stroke-width="1" stroke-dasharray="4,3"/>
-            <text x="${TL[0] - 14}" y="${(BL[1] + TL[1]) / 2}" text-anchor="end" font-size="13" fill="#333">${height} cm (hauteur)</text>
+            <!-- Cote: base b (en dehors, sous la figure) -->
+            <line x1="${BL[0]}" y1="${BL[1] + 16}" x2="${BR[0]}" y2="${BR[1] + 16}" stroke="#333" stroke-width="1.5"
+                  marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+            <text x="${(BL[0] + BR[0]) / 2}" y="${BR[1] + 32}" text-anchor="middle" font-size="13" fill="#333">${base} cm (base)</text>
 
-            <!-- Marque apex du triangle -->
-            <circle cx="${AP[0]}" cy="${AP[1]}" r="3" fill="#9c27b0"/>
+            <!-- Cote: hauteur h du rectangle (à gauche, en dehors) -->
+            <line x1="${TL[0] - 18}" y1="${BL[1]}" x2="${TL[0] - 18}" y2="${TL[1]}" stroke="#333" stroke-width="1.5"
+                  marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+            <text x="${TL[0] - 22}" y="${(BL[1] + TL[1]) / 2}" text-anchor="end" font-size="13" fill="#333">${height} cm (h rect.)</text>
+
+            <!-- Cote: hauteur h du triangle (à droite, en dehors) -->
+            <line x1="${BR[0] + 18}" y1="${TL[1]}" x2="${BR[0] + 18}" y2="${AP[1]}" stroke="#333" stroke-width="1.5"
+                  marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+            <text x="${BR[0] + 22}" y="${(TL[1] + AP[1]) / 2}" text-anchor="start" font-size="13" fill="#333">${height} cm (h tri.)</text>
         </svg>
     `;
 
